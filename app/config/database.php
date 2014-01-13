@@ -54,10 +54,21 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => '173.193.69.178',
-			'database'  => 'stygian_base',
-			'username'  => 'stygian_base',
-			'password'  => '#hsZz0G@E1#t',
+			'host'      => 'localhost',
+			'database'  => 'stygian_anima',
+			'username'  => 'stygian_anima',
+			'password'  => 'l9OgQ45oZQPy',
+			'charset'   => 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix'    => '',
+		),
+
+		'exceptions' => array(
+			'driver'    => 'mysql',
+			'host'      => 'localhost',
+			'database'  => 'stygian_exceptions',
+			'username'  => 'stygian_except',
+			'password'  => 'dL6_h0ZIcF[G',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

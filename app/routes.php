@@ -16,10 +16,42 @@ Route::controller('api' , 'Core_ApiVersionOneController');
  *******************************************************************/
 Route::group(array('before' => 'auth'), function()
 {
-	Route::controller('user'	, 'Core_UserController');
-	Route::controller('messages', 'Core_MessageController');
-	Route::controller('chat'	, 'Core_ChatController');
-	Route::controller('github'	, 'Core_GithubController');
+	Route::controller('user/characters/spells'	, 'User_Character_SpellController');
+	Route::controller('user/characters'			, 'User_CharacterController');
+
+	Route::controller('user'					, 'Core_UserController');
+	Route::controller('messages'				, 'Core_MessageController');
+	Route::controller('chat'					, 'Core_ChatController');
+	Route::controller('github'					, 'Core_GithubController');
+
+	Route::controller('character/spell'			, 'Character_SpellController');
+	Route::controller('character/tree'			, 'Character_TreeController');
+	Route::controller('character'				, 'CharacterController');
+});
+
+/********************************************************************
+ * Access to game master
+ *******************************************************************/
+Route::group(array('before' => 'auth|permission:GAME_MASTER'), function()
+{
+	Route::controller('game/master/rules/core'		, 'Game_Master_Rules_CoreController');
+	Route::controller('game/master/rules/modules'	, 'Game_Master_Rules_ModuleController');
+	Route::controller('game/master/rules/abilities'	, 'Game_Master_Rules_AbilityController');
+	Route::controller('game/master/rules/ki'		, 'Game_Master_Rules_KiController');
+	Route::controller('game/master/rules/magic'		, 'Game_Master_Rules_MagicController');
+	Route::controller('game/master/rules/psychic'	, 'Game_Master_Rules_PsychicController');
+	Route::controller('game/master/rules/summoning'	, 'Game_Master_Rules_SummoningController');
+	Route::controller('game/master/rules'			, 'Game_Master_RulesController');
+
+	Route::controller('game/master/games'			, 'Game_Master_GameController');
+
+	Route::controller('game/master/items'			, 'Game_Master_ItemController');
+
+	Route::controller('game/master/character'		, 'Game_Master_CharacterController');
+	Route::controller('game/master/enemy'			, 'Game_Master_EnemyController');
+	Route::controller('game/master/entity'			, 'Game_Master_EntityController');
+
+	Route::controller('game/master'					, 'Game_MasterController');
 });
 
 /********************************************************************

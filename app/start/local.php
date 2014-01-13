@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Helper Methods
  *
@@ -154,4 +155,15 @@ function variableObject($object, $tap)
     }
 
     return $object;
+}
+
+function getRootClass($object, $lower = false)
+{
+    $class = str_replace(array('Core\\', 'Presenter'), '', get_class($object));
+
+    if ($lower == true) {
+        $class = Str::lower($class);
+    }
+
+    return $class;
 }

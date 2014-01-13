@@ -10,19 +10,25 @@
 		"juy/profiler" : "dev-master",
 		"intervention/image": "dev-master",
 		"leafo/lessphp": "0.4.0",
-		"knplabs/github-api": "*"
+		"knplabs/github-api": "*",
+		"mccool/laravel-auto-presenter": "*"
 	},
 	"autoload": {
 		"classmap": [
 			"app/commands",
 			"app/controllers",
 			"app/library",
+			"app/presenters",
 			"app/models",
 			"app/core",
 			"app/core/commands",
 			"app/core/controllers",
+			"app/core/Control",
 			"app/core/library",
 			"app/core/models",
+			"app/core/Forum",
+			"app/core/presenters",
+			"app/core/Utility",
 			"app/database/migrations",
 			"app/database/seeds",
 			"app/tests/TestCase.php"

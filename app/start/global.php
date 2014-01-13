@@ -51,6 +51,7 @@ Log::useDailyFiles(storage_path().'/logs/'.$logFile);
 
 App::error(function(Exception $exception, $code)
 {
+	// \Core\Control\Facades\CoreBug::notifyException($exception);
 	Log::error($exception);
 });
 

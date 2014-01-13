@@ -5,11 +5,11 @@
 
 		if (parts[1] != null) {
 			$('#'+ parts[1]).parent().addClass('active');
-			$('#ajaxContent').html('<i class="icon-spinner icon-spin"></i>');
+			$('#ajaxContent').html('<i class="fa fa-spinner fa-spin"></i>');
 			$('#ajaxContent').load(baseURL + parts[1]);
 		} else {
 			$('#' + startTab).parent().addClass('active');
-			$('#ajaxContent').html('<i class="icon-spinner icon-spin"></i>');
+			$('#ajaxContent').html('<i class="fa fa-spinner fa-spin"></i>');
 			$('#ajaxContent').load(baseURL + startTab);
 		}
 		$('.ajaxLink').click(function() {
@@ -18,7 +18,7 @@
 			$(this).parent().addClass('active');
 
 			var link = $(this).attr('id');
-			$('#ajaxContent').html('<i class="icon-spinner icon-spin"></i>');
+			$('#ajaxContent').html('<i class="fa fa-spinner fa-spin"></i>');
 			$('#ajaxContent').load(baseURL + link);
 		});
 	}
@@ -36,7 +36,7 @@
 			var formId = $(this).attr('id');
 
 			$('#' + formId + ' .error').removeClass('error');
-			$('#' + formId + ' #message').html('<i class="icon-spinner icon-spin"></i>');
+			$('#' + formId + ' #message').html('<i class="fa fa-spinner fa-spin"></i>');
 
 			$.post(opts.path, $(this).serialize(), function(response) {
 				if (response.status == 'success') {
