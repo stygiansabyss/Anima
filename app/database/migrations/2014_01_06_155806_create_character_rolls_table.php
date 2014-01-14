@@ -16,7 +16,6 @@ class CreateCharacterRollsTable extends Migration {
 			$table->increments('id');
 			$table->string('user_id', 10)->index();
 			$table->integer('roll');
-			$table->boolean('usedFlag')->default(0);
 			$table->timestamps();
 		});
 	}

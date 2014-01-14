@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AddDeadflagToEnemies extends Migration {
+class CreateGameItemRaritiesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,10 +12,14 @@ class AddDeadflagToEnemies extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('enemies', function(Blueprint $table) {
-			$table->boolean('deadFlag')->default(0)->index()->after('activeFlag');
+		Schema::create('game_item_rarities', function(Blueprint $table) {
+			$table->increments('id');
+			$table->string('name');
+			$table->string('color', 7);
+			$table->timestamps();
 		});
 	}
+
 
 	/**
 	 * Reverse the migrations.
@@ -24,9 +28,7 @@ class AddDeadflagToEnemies extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('enemies', function(Blueprint $table) {
-			$table->dropColumn('deadFlag');
-		});
+		Schema::drop('game_item_rarities');
 	}
 
 }

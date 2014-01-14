@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AddDeadflagToGameCharacters extends Migration {
+class AddOldIdToMagicTreesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,8 +12,8 @@ class AddDeadflagToGameCharacters extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('characters', function(Blueprint $table) {
-			$table->boolean('deadFlag')->default(0)->index()->after('activeFlag');
+		Schema::table('magic_trees', function(Blueprint $table) {
+			$table->integer('oldId')->index()->nullable();
 		});
 	}
 
@@ -24,8 +24,8 @@ class AddDeadflagToGameCharacters extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('characters', function(Blueprint $table) {
-			$table->dropColumn('deadFlag');
+		Schema::table('magic_trees', function(Blueprint $table) {
+			$table->dropColumn('oldId');
 		});
 	}
 

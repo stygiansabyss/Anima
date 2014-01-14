@@ -23,4 +23,15 @@ class User extends Core\User {
 	{
 		return in_array($gameId, $this->games->game_id->toArray());
 	}
+
+	public function characterInProgress()
+	{
+		$characters = $this->characters;
+
+		$characters->filter(function ($character) {
+			return $character->checkStatus(['IN_PROGRESS', 'AWAITING_APPROVAL']);
+		});
+
+		return $character->count() > 0;
+	}
 }

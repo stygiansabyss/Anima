@@ -39,6 +39,21 @@ class ActionsTableSeeder extends Seeder {
                 'keyName' => 'PROMOTE_FRONT_PAGE',
                 'description' => 'Grants the ability to promote a forum post to the front page.'
             ),
+            array(
+                'name' => 'Game Master',
+                'keyName' => 'GAME_MASTER',
+                'description' => ''
+            ),
+            array(
+                'name' => 'Create Games',
+                'keyName' => 'CREATE_GAMES',
+                'description' => 'Grants the ability to create new games.'
+            ),
+            array(
+                'name' => 'Run Games',
+                'keyName' => 'RUN_GAMES',
+                'description' => 'Grants the ability to run games.'
+            ),
         );
 
         // Uncomment the below to run the seeder

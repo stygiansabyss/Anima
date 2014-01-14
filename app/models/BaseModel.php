@@ -13,6 +13,32 @@ class BaseModel extends Core_BaseModel {
 	/********************************************************************
 	 * Extra Methods
 	 *******************************************************************/
+	public function checkStatus($statuses, $matchAll = false)
+	{
+		if (!is_array($statuses)) {
+			$statuses = array($statuses);
+		}
+
+		$matchedStatus = 0;
+
+		$characterStatuses = $this->status->keyName->toArray();
+
+		foreach ($statuses as $status) {
+			if (in_array($status, $characterStatuses)) {
+				if (!$matchAll) {
+					return true;
+				}
+
+				$matchedStatus++;
+			}
+		}
+
+		if ($matchedStatus) {
+			if (count($statuses) == $matchedStatus) return true;
+		}
+
+		return false;
+	}
 
 	public static function createCharacter($forcedRolls = false)
 	{

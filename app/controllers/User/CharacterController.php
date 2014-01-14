@@ -45,7 +45,6 @@ class User_CharacterController extends BaseController {
 			$newRoll           = new Character_Roll;
 			$newRoll->user_id  = $this->activeUser->id;
 			$newRoll->roll     = $roll;
-			$newRoll->usedFlag = 0;
 
 			$this->save($newRoll);
 		}

@@ -69,6 +69,10 @@ class Game_Trait extends BaseModel {
 
 	public function getRangeAttribute()
 	{
+		if ($this->minimumValue == $this->maximumValue) {
+			return $this->minimumValue;
+		}
+
 		return $this->minimumValue .' - '. $this->maximumValue;
 	}
 

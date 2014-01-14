@@ -36,6 +36,7 @@ class RolesTableSeeder extends Seeder {
                 'description' => 'Approved Forum users.',
                 'priority' => 2,
             ),
+            // 5
             array(
                 'group' => 'Forum',
                 'name' => 'Forum Moderator',
@@ -49,6 +50,27 @@ class RolesTableSeeder extends Seeder {
                 'keyName' => 'FORUM_ADMIN',
                 'description' => 'Grants access to full control over the forums.',
                 'priority' => 5,
+            ),
+            array(
+                'group' => 'Game',
+                'name' => 'Game Master',
+                'keyName' => 'GAME_MASTER',
+                'description' => 'Ability to create games.',
+                'priority' => 3,
+            ),
+            array(
+                'group' => 'Game',
+                'name' => 'Game Player',
+                'keyName' => 'GAME_PLAYER',
+                'description' => 'Ability to play in games.',
+                'priority' => 1,
+            ),
+            array(
+                'group' => 'Game',
+                'name' => 'Game StoryTeller',
+                'keyName' => 'GAME_STORYTELLER',
+                'description' => 'Ability to run games.',
+                'priority' => 2,
             ),
         );
 

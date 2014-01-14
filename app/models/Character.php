@@ -58,6 +58,7 @@ class Character extends BaseModel {
 		'attributes'          => array('morphMany',	'Character_Attribute',			'name'       => 'morph'),
 		'appearances'         => array('morphMany',	'Character_Appearance',			'name'       => 'morph'),
 		'class'               => array('morphOne',	'Character_Class',				'name'       => 'morph'),
+		'status'              => array('morphMany',	'Character_Status',				'name'       => 'morph'),
 	);
 
 	/********************************************************************

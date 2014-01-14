@@ -86,7 +86,7 @@ Route::group(array('before' => 'auth|permission:FORUM_ACCESS'), function()
  *******************************************************************/
 Route::group(array('before' => 'auth|permission:SITE_ADMIN'), function()
 {
-	Route::controller('admin', 'Core_AdminController');
+	Route::controller('admin', 'AdminController');
 });
 
 // Landing page
