@@ -2,7 +2,7 @@
 
 class Helper_Game extends Helper_User {
 
-	protected function moveGameTable()
+	protected function moveGamesTable()
 	{
 		if ($this->confirm('Do you wish to move games? [yes|no]')) {
 			// Move the characters
@@ -56,13 +56,10 @@ class Helper_Game extends Helper_User {
 	{
 		if ($this->confirm('Do you wish to move the attributes? [yes|no]')) {
 			// Move the characters
-			$objects = DB::table('stygian_main.game_attributes')->get();
+			$objects = DB::table('stygian_main.game_template_attributes')->get();
 
 			foreach ($objects as $object) {
-				// Get the old game ID
-				$oldGameNewId = $this->getIdForOldId('Game', $object->game_id);
-
-				if ($oldGameNewId != '0') {
+				if ($object->game_template_id == 1) {
 					$newObject              = new Attribute;
 					$newObject->name        = $object->name;
 					$newObject->description = $object->description;
@@ -104,13 +101,10 @@ class Helper_Game extends Helper_User {
 	{
 		if ($this->confirm('Do you wish to move the appearances? [yes|no]')) {
 			// Move the characters
-			$objects = DB::table('stygian_main.game_appearance')->get();
+			$objects = DB::table('stygian_main.game_template_appearances')->get();
 
 			foreach ($objects as $object) {
-				// Get the old game ID
-				$oldGameNewId = $this->getIdForOldId('Game', $object->game_id);
-
-				if ($oldGameNewId != '0') {
+				if ($object->game_template_id == 1) {
 					$newObject              = new Appearance;
 					$newObject->name        = $object->name;
 					$newObject->description = $object->description;
@@ -131,15 +125,12 @@ class Helper_Game extends Helper_User {
 	{
 		if ($this->confirm('Do you wish to move the secondary attributes? [yes|no]')) {
 			// Move the characters
-			$objects = DB::table('stygian_main.game_secondary_attributes')->get();
+			$objects = DB::table('stygian_main.game_template_secondary_attributes')->get();
 
 			foreach ($objects as $object) {
-				// Get the old game ID
-				$oldGameNewId = $this->getIdForOldId('Game', $object->game_id);
-
-				if ($oldGameNewId != '0') {
+				if ($object->game_template_id == 1) {
 					$newObject               = new Attribute_Secondary;
-					$newObject->attribute_id = $this->getIdForOldId('Attribute', $object->game_attribute_id);
+					$newObject->attribute_id = $this->getIdForOldId('Attribute', $object->game_template_attribute_id);
 					$newObject->name         = $object->name;
 					$newObject->description  = $object->description;
 					$newObject->created_at   = $object->created_at;
@@ -159,15 +150,12 @@ class Helper_Game extends Helper_User {
 	{
 		if ($this->confirm('Do you wish to move the skills? [yes|no]')) {
 			// Move the characters
-			$objects = DB::table('stygian_main.game_skills')->get();
+			$objects = DB::table('stygian_main.game_template_skills')->get();
 
 			foreach ($objects as $object) {
-				// Get the old game ID
-				$oldGameNewId = $this->getIdForOldId('Game', $object->game_id);
-
-				if ($oldGameNewId != '0') {
+				if ($object->game_template_id == 1) {
 					$newObject               = new Skill;
-					$newObject->attribute_id = $this->getIdForOldId('Attribute', $object->game_attribute_id);
+					$newObject->attribute_id = $this->getIdForOldId('Attribute', $object->game_template_attribute_id);
 					$newObject->name         = $object->name;
 					$newObject->description  = $object->description;
 					$newObject->created_at   = $object->created_at;
@@ -187,13 +175,10 @@ class Helper_Game extends Helper_User {
 	{
 		if ($this->confirm('Do you wish to move the stats? [yes|no]')) {
 			// Move the characters
-			$objects = DB::table('stygian_main.game_base_stats')->get();
+			$objects = DB::table('stygian_main.game_template_base_stats')->get();
 
 			foreach ($objects as $object) {
-				// Get the old game ID
-				$oldGameNewId = $this->getIdForOldId('Game', $object->game_id);
-
-				if ($oldGameNewId != '0') {
+				if ($object->game_template_id == 1) {
 					$newObject               = new Stat;
 					$newObject->name         = $object->name;
 					$newObject->description  = $object->description;
@@ -239,13 +224,10 @@ class Helper_Game extends Helper_User {
 	{
 		if ($this->confirm('Do you wish to move the classes? [yes|no]')) {
 			// Move the characters
-			$objects = DB::table('stygian_main.game_classes')->get();
+			$objects = DB::table('stygian_main.game_template_classes')->get();
 
 			foreach ($objects as $object) {
-				// Get the old game ID
-				$oldGameNewId = $this->getIdForOldId('Game', $object->game_id);
-
-				if ($oldGameNewId != '0') {
+				if ($object->game_template_id == 1) {
 					$newObject               = new Game_Class;
 					$newObject->name         = $object->name;
 					$newObject->description  = $object->description;
@@ -380,6 +362,27 @@ class Helper_Game extends Helper_User {
 		}
 	}
 
+	protected function moveGameQuestItems()
+	{
+		if ($this->confirm('Do you wish to move the quest items? [yes|no]')) {
+			// Move the characters
+			$objects = DB::table('stygian_main.game_quest_items')->get();
+
+			foreach ($objects as $object) {
+				$newObject             = new Item_Quest;
+				$newObject->quest_id   = $this->getIdForOldId('Game_Quest', $object->game_quest_id);
+				$newObject->item_id    = $this->getIdForOldId('Item', $object->game_item_id);
+				$newObject->created_at = $object->created_at;
+				$newObject->updated_at = $object->updated_at;
+
+				$newObject->save();
+			}
+			$this->info('Quest itemss moved');
+		} else {
+			$this->info('Quest itemss skipped');
+		}
+	}
+
 	protected function moveMagicTypesTable()
 	{
 		if ($this->confirm('Do you wish to move the magic types? [yes|no]')) {
@@ -452,6 +455,32 @@ class Helper_Game extends Helper_User {
 			$this->info('Magic spells moved');
 		} else {
 			$this->info('Magic spells skipped');
+		}
+	}
+
+	protected function moveGameNpcItemsTable()
+	{
+		if ($this->confirm('Do you wish to move the npc items? [yes|no]')) {
+			// Move the characters
+			$objects = DB::table('stygian_main.character_loot')->get();
+
+			foreach ($objects as $object) {
+				$character = $this->findCharacterById($object->character_id);
+
+				if (!is_null($character)) {
+					$newObject                = new Item_Character;
+					$newObject->morph_id      = $character->id;
+					$newObject->morph_type    = getRootClass($character);
+					$newObject->item_id       = $this->getIdForOldId('Item', $object->game_item_id);
+					$newObject->created_at    = $object->created_at;
+					$newObject->updated_at    = $object->updated_at;
+
+					$newObject->save();
+				}
+			}
+			$this->info('Npc items moved');
+		} else {
+			$this->info('Npc items skipped');
 		}
 	}
 }

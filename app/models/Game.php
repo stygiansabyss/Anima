@@ -56,7 +56,7 @@ class Game extends BaseModel {
 	public function getPlayerCharactersAttribute()
 	{
 		$characters = $this->characters->filter(function ($character) {
-			if ($character->morph->activeFlag == 0 || $character->morph->deadFlag == 1) return false;
+			if ($character->morph->checkStatus(array('DEAD', 'INACTIVE', 'NPC'))) return false;
 			if ($character->morph_type == 'Character') return true;
 		})->morph;
 
@@ -66,7 +66,8 @@ class Game extends BaseModel {
 	public function getNpcsAttribute()
 	{
 		$characters = $this->characters->filter(function ($character) {
-			if ($character->morph->activeFlag == 0 || $character->morph->deadFlag == 1) return false;
+			if ($character->morph->checkStatus(array('DEAD', 'INACTIVE'))) return false;
+			if ($character->morph->checkStatus(array('NPC'))) return true;
 			if ($character->morph_type == 'Enemy') return true;
 		})->morph;
 
@@ -76,8 +77,7 @@ class Game extends BaseModel {
 	public function getDeadCharactersAttribute()
 	{
 		$characters = $this->characters->morph->filter(function ($character) {
-			if ($character->deadFlag == 1) return true;
-			if ($character->activeFlag == 0) return true;
+			if ($character->checkStatus(array('DEAD', 'INACTIVE'))) return true;
 		});
 
 		return $characters;

@@ -52,6 +52,28 @@ return array(
 			'prefix'   => '',
 		),
 
+		'mysql' => array(
+			'driver'    => 'mysql',
+			'host'      => 'localhost',
+			'database'  => 'stygian_anima',
+			'username'  => 'stygian_anima',
+			'password'  => 'l9OgQ45oZQPy',
+			'charset'   => 'utf8',
+			'collation' => 'utf8_general_ci',
+			'prefix'    => '',
+		),
+
+		'exceptions' => array(
+			'driver'    => 'mysql',
+			'host'      => 'localhost',
+			'database'  => 'stygian_exceptions',
+			'username'  => 'stygian_except',
+			'password'  => 'dL6_h0ZIcF[G',
+			'charset'   => 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix'    => '',
+		),
+
 		'pgsql' => array(
 			'driver'   => 'pgsql',
 			'host'     => 'localhost',

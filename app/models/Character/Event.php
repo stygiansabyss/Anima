@@ -1,6 +1,6 @@
 <?php
 
-class Character_Status extends BaseModel {
+class Character_Event extends BaseModel {
 	/********************************************************************
 	 * Declarations
 	 *******************************************************************/
@@ -9,7 +9,7 @@ class Character_Status extends BaseModel {
 	 *
 	 * @var string $table The table this model uses
 	 */
-	protected $table      = 'character_statuses';
+	protected $table      = 'character_events';
 	
 	/********************************************************************
 	 * Aware validation rules
@@ -23,7 +23,7 @@ class Character_Status extends BaseModel {
 	public static $rules = array(
 		'morph_id'   => 'required',
 		'morph_type' => 'required',
-		'status_id'   => 'exists:statuses,id',
+		'event_id'   => 'exists:game_events,uniqueId',
 	);
 	
 	/********************************************************************
@@ -34,8 +34,8 @@ class Character_Status extends BaseModel {
 	 * Relationships
 	 *******************************************************************/
 	public static $relationsData = array(
-		'status' => array('belongsTo', 'Status', 'foreignKey' => 'status_id'),
-		'morph'  => array('morphTo'),
+		'event' => array('belongsTo', 'Game_Event', 'foreignKey' => 'event_id'),
+		'morph' => array('morphTo'),
 	);
 
 	/********************************************************************

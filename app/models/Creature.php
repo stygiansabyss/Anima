@@ -1,6 +1,6 @@
 <?php
 
-class Enemy extends BaseModel {
+class Creature extends BaseModel {
 	/********************************************************************
 	 * Declarations
 	 *******************************************************************/
@@ -9,7 +9,7 @@ class Enemy extends BaseModel {
 	 *
 	 * @var string $table The table this model uses
 	 */
-	protected $table      = 'enemies';
+	protected $table      = 'creatures';
 	protected $primaryKey = 'uniqueId';
 	public $incrementing  = false;
 

@@ -57,11 +57,14 @@ class MigrationCommand extends Helper_Game {
 			if ($all == 1 || $users == 1) {
 				$this->moveUsersTable();
 			}
-			if ($all == 1 || $characters == 1) {
+			if ($all == 1 || $gameParts == 1) {
 				$this->moveGameParts();
 			}
 			if ($all == 1 || $characters == 1) {
 				$this->moveCharacters();
+			}
+			if ($all == 1 || $gameParts == 1) {
+				$this->moveGamePartsAfterCharacters();
 			}
 			if ($all == 1 || $forums == 1) {
 				$this->moveForums();
@@ -119,6 +122,7 @@ class MigrationCommand extends Helper_Game {
 		$this->moveGameItemRarities();
 		$this->moveGameItems();
 		$this->moveGameQuests();
+		$this->moveGameQuestItems();
 		$this->moveMagicTypesTable();
 		$this->moveMagicTreesTable();
 		$this->moveMagicSpellsTable();
@@ -127,7 +131,24 @@ class MigrationCommand extends Helper_Game {
 	protected function moveCharacters()
 	{
 		$this->moveCharactersTable();
-		$this->moveFFCharacterDetailsTable();
+		$this->moveCharacterDetailsTable();
+		$this->moveCharacterClassesTable();
+		$this->moveCharacterAppearancesTable();
+		$this->moveCharacterAttributesTable();
+		$this->moveCharacterEventsTable();
+		$this->moveCharacterExperienceHistoryTable();
+		$this->moveCharacterNotesTable();
+		$this->moveCharacterQuestsTable();
+		$this->moveCharacterSecondaryAttributesTable();
+		$this->moveCharacterSkillsTable();
+		$this->moveCharacterSpellsTable();
+		$this->moveCharacterStatsTable();
+		$this->moveCharacterTraitsTable();
+	}
+
+	protected function moveGamePartsAfterCharacters()
+	{
+		$this->moveGameNpcItemsTable();
 	}
 
 	protected function moveForums()

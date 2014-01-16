@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder {
 		$this->call('MessageFoldersTableSeeder');
 		$this->call('PreferencesTableSeeder');
 		$this->call('SeedsTableSeeder');
+		$this->call('PreferencesTableSeeder_Update_12_17_2013');
+		$this->call('PreferencesTableSeeder_Update_01_09_2014');
 	}
 
 }

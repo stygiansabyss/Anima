@@ -15,7 +15,8 @@ class MenuController extends Core_BaseController
 				$postsCount = $this->activeUser->unreadPostCount();
 				$forumTitle = ($postsCount > 0 ? 'Forums ('. $postsCount .')' : 'Forums');
 
-				Menu::addMenuItem($forumTitle, 'forum', null, 1);
+				Menu::addMenuItem($forumTitle, 'forum', null, 1)
+					->addMenuChild($forumTitle, 'Search', 'forum/search');
 
 				// Forum Moderation
 				if ($this->hasPermission('FORUM_MOD')) {

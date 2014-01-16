@@ -21,7 +21,7 @@ class BaseModel extends Core_BaseModel {
 
 		$matchedStatus = 0;
 
-		$characterStatuses = $this->status->keyName->toArray();
+		$characterStatuses = $this->status->status->keyName->toArray();
 
 		foreach ($statuses as $status) {
 			if (in_array($status, $characterStatuses)) {
