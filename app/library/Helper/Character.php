@@ -12,6 +12,14 @@ class Helper_Character extends Helper_Forum {
 		'Sera Van Keurlin',
 		'Tanith Haritza',
 		'Zihao Jeng',
+		'Aquamarine Orchard',
+		'Asgeir Alfhild',
+		'Oswald Ozello',
+		'Felix Mordenson',
+		'Jaden Fiowen',
+		'Raeah Talai',
+		'Vashnier Bjorson',
+		'Vigdis Úlfa'
 	);
 	protected $npcs = array(
 		'Aaron Normandy',
@@ -34,7 +42,22 @@ class Helper_Character extends Helper_Forum {
 		'Sinomen Tate',
 		'Trisha Wells',
 		'Z\'mara Thushia',
-
+		'Isoba Dia',
+		'Kioko Arashi',
+		'Osser Jatas',
+		'Aliya Otori',
+		'Aya Giovanni',
+		'Chumana Nightshade',
+		'Darrius Rohaan',
+		'Jayli Tiberiah',
+		'Joe Duncan',
+		'Nettle Farseer',
+		'Peace Theodor',
+		'Rachael Hannigan',
+		'Desina Darrin',
+		'Marinda Kestrel',
+		'Master Jacob',
+		'Roselyn Adair'
 	);
 	protected $enemies = array(
 		'Avaritia',
@@ -47,6 +70,13 @@ class Helper_Character extends Helper_Forum {
 		'Thug 2',
 		'Thug Leader',
 		'Tristitia',
+		'Baron Gerik',
+		'Baron Gizella',
+		'Bogill',
+		'Flame Turret',
+		'Lead Researcher',
+		'Researcher',
+		'Wissenshaft Guard'
 	);
 	protected $creatures = array('Aislyn');
 	protected $enemyCreatures = array(
@@ -64,6 +94,7 @@ class Helper_Character extends Helper_Forum {
 		'Werewolf Mage',
 		'Werewolf Priest',
 		'Zombie',
+		'Jack the Steam Golem'
 	);
 	protected $entities = array(
 		'Editor',

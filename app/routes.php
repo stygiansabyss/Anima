@@ -78,7 +78,7 @@ Route::group(array('before' => 'auth|permission:FORUM_ACCESS'), function()
 	Route::controller('forum/post'		, 'Core_Forum_PostController');
 	Route::controller('forum/board'		, 'Core_Forum_BoardController');
 	Route::controller('forum/category'	, 'Core_Forum_CategoryController');
-	Route::controller('forum'			, 'Core_ForumController');
+	Route::controller('forum'			, 'ForumController');
 });
 
 /********************************************************************
