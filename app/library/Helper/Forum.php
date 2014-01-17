@@ -67,10 +67,12 @@ class Helper_Forum extends Helper_Message {
 			$boards = Forum_Board::all();
 
 			foreach ($boards as $board) {
-				if (is_int($board->parent_id)) {
+				if ($board->parent_id == '0') {
+					$board->parent_id = null;
+				} else {
 					$board->parent_id = $this->getIdForOldId('Forum_Board', $board->parent_id);
-					$board->save();
 				}
+				$board->save();
 			}
 			$this->info('Boards moved');
 		} else {
