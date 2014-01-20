@@ -645,218 +645,244 @@ class Helper_Character extends Helper_Forum {
 
 	protected function convertAppearances($character, $type)
 	{
-		$oldCharacter  = DB::table('stygian_main.character_appearance')
+		$appearances  = DB::table('stygian_main.character_appearance')
 			->where('stygian_main.character_appearance.character_id', $character->oldId)
-			->first();
+			->get();
 
-		if (!is_null($oldCharacter)) {
-			$newObject                = new Character_Appearance;
-			$newObject->morph_id      = $character->uniqueId;
-			$newObject->morph_type    = $type;
-			$newObject->appearance_id = $this->getIdForOldId('Appearance', $oldCharacter->game_template_appearance_id);
-			$newObject->value         = $oldCharacter->value;
-			$newObject->created_at    = $oldCharacter->created_at;
-			$newObject->updated_at    = $oldCharacter->updated_at;
+		if (count($appearances) > 0) {
+			foreach ($appearances as $appearance) {
+				$newObject                = new Character_Appearance;
+				$newObject->morph_id      = $character->uniqueId;
+				$newObject->morph_type    = $type;
+				$newObject->appearance_id = $this->getIdForOldId('Appearance', $appearance->game_template_appearance_id);
+				$newObject->value         = $appearance->value;
+				$newObject->created_at    = $appearance->created_at;
+				$newObject->updated_at    = $appearance->updated_at;
 
-			$newObject->save();
+				$newObject->save();
+			}
 		}
 	}
 
 	protected function convertAttributes($character, $type)
 	{
-		$oldCharacter  = DB::table('stygian_main.character_attributes')
+		$attributes  = DB::table('stygian_main.character_attributes')
 			->where('stygian_main.character_attributes.character_id', $character->oldId)
-			->first();
+			->get();
 
-		if (!is_null($oldCharacter)) {
-			$newObject               = new Character_Attribute;
-			$newObject->morph_id     = $character->uniqueId;
-			$newObject->morph_type   = $type;
-			$newObject->attribute_id = $this->getIdForOldId('Attribute', $oldCharacter->game_template_attribute_id);
-			$newObject->value        = $oldCharacter->value;
-			$newObject->created_at   = $oldCharacter->created_at;
-			$newObject->updated_at   = $oldCharacter->updated_at;
+		if (count($attributes) > 0) {
+			foreach ($attributes as $attribute) {
+				$newObject               = new Character_Attribute;
+				$newObject->morph_id     = $character->uniqueId;
+				$newObject->morph_type   = $type;
+				$newObject->attribute_id = $this->getIdForOldId('Attribute', $attribute->game_template_attribute_id);
+				$newObject->value        = $attribute->value;
+				$newObject->created_at   = $attribute->created_at;
+				$newObject->updated_at   = $attribute->updated_at;
 
-			$newObject->save();
+				$newObject->save();
+			}
 		}
 	}
 
 	protected function convertEvents($character, $type)
 	{
-		$oldCharacter  = DB::table('stygian_main.game_history_characters')
+		$events  = DB::table('stygian_main.game_history_characters')
 			->where('stygian_main.game_history_characters.character_id', $character->oldId)
-			->first();
+			->get();
 
-		if (!is_null($oldCharacter)) {
-			$newObject             = new Character_Event;
-			$newObject->morph_id   = $character->uniqueId;
-			$newObject->morph_type = $type;
-			$newObject->event_id   = $this->getIdForOldId('Game_Event', $oldCharacter->game_history_id);
-			$newObject->experience = $oldCharacter->experience;
-			$newObject->note       = $oldCharacter->note;
-			$newObject->created_at = $oldCharacter->created_at;
-			$newObject->updated_at = $oldCharacter->updated_at;
+		if (count($events) > 0) {
+			foreach ($events as $event) {
+				$newObject             = new Character_Event;
+				$newObject->morph_id   = $character->uniqueId;
+				$newObject->morph_type = $type;
+				$newObject->event_id   = $this->getIdForOldId('Game_Event', $event->game_history_id);
+				$newObject->experience = $event->experience;
+				$newObject->note       = $event->note;
+				$newObject->created_at = $event->created_at;
+				$newObject->updated_at = $event->updated_at;
 
-			$newObject->save();
+				$newObject->save();
+			}
 		}
 	}
 
 	protected function convertExperienceHistory($character, $type)
 	{
-		$oldCharacter  = DB::table('stygian_main.character_experience_history')
+		$histories  = DB::table('stygian_main.character_experience_history')
 			->where('stygian_main.character_experience_history.character_id', $character->oldId)
-			->first();
+			->get();
 
-		if (!is_null($oldCharacter)) {
-			$newObject                = new Character_Experience_History;
-			$newObject->morph_id      = $character->uniqueId;
-			$newObject->morph_type    = $type;
-			$newObject->user_id       = $this->getIdForOldId('User', $oldCharacter->user_id);
-			$newObject->value         = $oldCharacter->value;
-			$newObject->reason        = $oldCharacter->reason == 'post' || $oldCharacter->reason == 'reply' ? null : $oldCharacter->reason;
-			$newObject->resource_id   = $oldCharacter->resource_id;
-			$newObject->resource_type = $oldCharacter->reason == 'post' ? 'Forum_Post' : $oldCharacter->reason == 'reply' ? 'Forum_Reply' : null;
-			$newObject->balance       = $oldCharacter->balance;
-			$newObject->created_at    = $oldCharacter->created_at;
-			$newObject->updated_at    = $oldCharacter->updated_at;
+		if (count($histories) > 0) {
+			foreach ($histories as $history) {
+				$newObject                = new Character_Experience_History;
+				$newObject->morph_id      = $character->uniqueId;
+				$newObject->morph_type    = $type;
+				$newObject->user_id       = $this->getIdForOldId('User', $history->user_id);
+				$newObject->value         = $history->value;
+				$newObject->reason        = $history->reason == 'post' || $history->reason == 'reply' ? null : $history->reason;
+				$newObject->resource_id   = $history->resource_id;
+				$newObject->resource_type = $history->reason == 'post' ? 'Forum_Post' : $history->reason == 'reply' ? 'Forum_Reply' : null;
+				$newObject->balance       = $history->balance;
+				$newObject->created_at    = $history->created_at;
+				$newObject->updated_at    = $history->updated_at;
 
-			$newObject->save();
+				$newObject->save();
+			}
 		}
 	}
 
 	protected function convertNotes($character, $type)
 	{
-		$oldCharacter  = DB::table('stygian_main.character_notes')
+		$notes  = DB::table('stygian_main.character_notes')
 			->where('stygian_main.character_notes.character_id', $character->oldId)
-			->first();
+			->get();
 
-		if (!is_null($oldCharacter)) {
-			$newObject             = new Character_Note;
-			$newObject->morph_id   = $character->uniqueId;
-			$newObject->morph_type = $type;
-			$newObject->game_id    = $character->games->game_id->first();
-			$newObject->user_id    = $this->getIdForOldId('User', $oldCharacter->user_id);
-			$newObject->title      = $oldCharacter->title;
-			$newObject->content    = $oldCharacter->content;
-			$newObject->created_at = $oldCharacter->created_at;
-			$newObject->updated_at = $oldCharacter->updated_at;
+		if (count($notes) > 0) {
+			foreach ($notes as $note) {
+				$newObject             = new Character_Note;
+				$newObject->morph_id   = $character->uniqueId;
+				$newObject->morph_type = $type;
+				$newObject->game_id    = $character->games->game_id->first();
+				$newObject->user_id    = $this->getIdForOldId('User', $note->user_id);
+				$newObject->title      = $note->title;
+				$newObject->content    = $note->content;
+				$newObject->created_at = $note->created_at;
+				$newObject->updated_at = $note->updated_at;
 
-			$newObject->save();
+				$newObject->save();
+			}
 		}
 	}
 
 	protected function convertQuests($character, $type)
 	{
-		$oldCharacter  = DB::table('stygian_main.game_quest_characters')
+		$quests  = DB::table('stygian_main.game_quest_characters')
 			->where('stygian_main.game_quest_characters.character_id', $character->oldId)
-			->first();
+			->get();
 
-		if (!is_null($oldCharacter)) {
-			$newObject             = new Character_Quest;
-			$newObject->morph_id   = $character->uniqueId;
-			$newObject->morph_type = $type;
-			$newObject->quest_id   = $this->getIdForOldId('Game_Quest', $oldCharacter->game_quest_id);
-			$newObject->created_at = $oldCharacter->created_at;
-			$newObject->updated_at = $oldCharacter->updated_at;
+		if (count($quests) > 0) {
+			foreach ($quests as $quest) {
+				$newObject             = new Character_Quest;
+				$newObject->morph_id   = $character->uniqueId;
+				$newObject->morph_type = $type;
+				$newObject->quest_id   = $this->getIdForOldId('Game_Quest', $quest->game_quest_id);
+				$newObject->created_at = $quest->created_at;
+				$newObject->updated_at = $quest->updated_at;
 
-			$newObject->save();
+				$newObject->save();
+			}
 		}
 	}
 
 	protected function convertSecondaryAttributes($character, $type)
 	{
-		$oldCharacter  = DB::table('stygian_main.character_secondary_attributes')
+		$attributes  = DB::table('stygian_main.character_secondary_attributes')
 			->where('stygian_main.character_secondary_attributes.character_id', $character->oldId)
-			->first();
+			->get();
 
-		if (!is_null($oldCharacter)) {
-			$newObject               = new Character_Attribute_Secondary;
-			$newObject->morph_id     = $character->uniqueId;
-			$newObject->morph_type   = $type;
-			$newObject->attribute_id = $this->getIdForOldId('Attribute_Secondary', $oldCharacter->game_template_secondary_attribute_id);
-			$newObject->value        = $oldCharacter->value;
-			$newObject->created_at   = $oldCharacter->created_at;
-			$newObject->updated_at   = $oldCharacter->updated_at;
+		if (count($attributes) > 0) {
+			foreach ($attributes as $attribute) {
+				$newObject               = new Character_Attribute_Secondary;
+				$newObject->morph_id     = $character->uniqueId;
+				$newObject->morph_type   = $type;
+				$newObject->attribute_id = $this->getIdForOldId('Attribute_Secondary', $attribute->game_template_secondary_attribute_id);
+				$newObject->value        = $attribute->value;
+				$newObject->created_at   = $attribute->created_at;
+				$newObject->updated_at   = $attribute->updated_at;
 
-			$newObject->save();
+				$newObject->save();
+			}
 		}
 	}
 
 	protected function convertSkills($character, $type)
 	{
-		$oldCharacter  = DB::table('stygian_main.character_skills')
+		$existingSkillIds = Character_Skill::where('morph_id', $character->id)->where('morph_type', $type)->get()->skill_id->toArray();
+		$skills  = DB::table('stygian_main.character_skills')
 			->where('stygian_main.character_skills.character_id', $character->oldId)
-			->first();
+			->whereNotIn('stygian_main.character_skills.game_template_skill_id', $existingSkillIds)
+			->get();
 
-		if (!is_null($oldCharacter)) {
-			$newObject             = new Character_Skill;
-			$newObject->morph_id   = $character->uniqueId;
-			$newObject->morph_type = $type;
-			$newObject->skill_id   = $this->getIdForOldId('Skill', $oldCharacter->game_template_skill_id);
-			$newObject->value      = $oldCharacter->value;
-			$newObject->created_at = $oldCharacter->created_at;
-			$newObject->updated_at = $oldCharacter->updated_at;
+		if (count($skills) > 0) {
+			foreach ($skills as $skill) {
+				$skillId       = $this->getIdForOldId('Skill', $skill->game_template_skill_id);
 
-			$newObject->save();
+				$newObject             = new Character_Skill;
+				$newObject->morph_id   = $character->uniqueId;
+				$newObject->morph_type = $type;
+				$newObject->skill_id   = $skillId;
+				$newObject->value      = $skill->value;
+				$newObject->created_at = $skill->created_at;
+				$newObject->updated_at = $skill->updated_at;
+
+				$newObject->save();
+			}
 		}
 	}
 
 	protected function convertSpells($character, $type)
 	{
-		$oldCharacter  = DB::table('stygian_main.character_spells')
+		$spells  = DB::table('stygian_main.character_spells')
 			->where('stygian_main.character_spells.character_id', $character->oldId)
-			->first();
+			->get();
 
-		if (!is_null($oldCharacter)) {
-			$newObject                 = new Character_Spell;
-			$newObject->morph_id       = $character->uniqueId;
-			$newObject->morph_type     = $type;
-			$newObject->magic_spell_id = $this->getIdForOldId('Magic_Spell', $oldCharacter->game_template_spell_id);
-			$newObject->buyCost        = $oldCharacter->buyCost;
-			$newObject->description    = $oldCharacter->description;
-			$newObject->approvedFlag   = $oldCharacter->approvedFlag;
-			$newObject->created_at     = $oldCharacter->created_at;
-			$newObject->updated_at     = $oldCharacter->updated_at;
+		if (count($spells) > 0) {
+			foreach ($spells as $spell) {
+				$newObject                 = new Character_Spell;
+				$newObject->morph_id       = $character->uniqueId;
+				$newObject->morph_type     = $type;
+				$newObject->magic_spell_id = $this->getIdForOldId('Magic_Spell', $spell->game_template_spell_id);
+				$newObject->buyCost        = $spell->buyCost;
+				$newObject->description    = $spell->description;
+				$newObject->approvedFlag   = $spell->approvedFlag;
+				$newObject->created_at     = $spell->created_at;
+				$newObject->updated_at     = $spell->updated_at;
 
-			$newObject->save();
+				$newObject->save();
+			}
 		}
 	}
 
 	protected function convertStats($character, $type)
 	{
-		$oldCharacter  = DB::table('stygian_main.character_stats')
+		$stats  = DB::table('stygian_main.character_stats')
 			->where('stygian_main.character_stats.character_id', $character->oldId)
-			->first();
+			->get();
 
-		if (!is_null($oldCharacter)) {
-			$newObject             = new Character_Stat;
-			$newObject->morph_id   = $character->uniqueId;
-			$newObject->morph_type = $type;
-			$newObject->stat_id    = $this->getIdForOldId('Stat', $oldCharacter->game_template_base_stat_id);
-			$newObject->value      = $oldCharacter->value;
-			$newObject->created_at = $oldCharacter->created_at;
-			$newObject->updated_at = $oldCharacter->updated_at;
+		if (count($stats) > 0) {
+			foreach ($stats as $stat) {
+				$newObject             = new Character_Stat;
+				$newObject->morph_id   = $character->uniqueId;
+				$newObject->morph_type = $type;
+				$newObject->stat_id    = $this->getIdForOldId('Stat', $stat->game_template_base_stat_id);
+				$newObject->value      = $stat->value;
+				$newObject->created_at = $stat->created_at;
+				$newObject->updated_at = $stat->updated_at;
 
-			$newObject->save();
+				$newObject->save();
+			}
 		}
 	}
 
 	protected function convertTraits($character, $type)
 	{
-		$oldCharacter  = DB::table('stygian_main.character_traits')
+		$traits  = DB::table('stygian_main.character_traits')
 			->where('stygian_main.character_traits.character_id', $character->oldId)
-			->first();
+			->get();
 
-		if (!is_null($oldCharacter)) {
-			$newObject             = new Character_Trait;
-			$newObject->morph_id   = $character->uniqueId;
-			$newObject->morph_type = $type;
-			$newObject->trait_id    = $this->getIdForOldId('Game_Trait', $oldCharacter->game_template_trait_id);
-			$newObject->value      = $oldCharacter->value;
-			$newObject->created_at = $oldCharacter->created_at;
-			$newObject->updated_at = $oldCharacter->updated_at;
+		if (count($traits) > 0) {
+			foreach ($traits as $trait) {
+				$newObject             = new Character_Trait;
+				$newObject->morph_id   = $character->uniqueId;
+				$newObject->morph_type = $type;
+				$newObject->trait_id   = $this->getIdForOldId('Game_Trait', $trait->game_template_trait_id);
+				$newObject->value      = $trait->value;
+				$newObject->created_at = $trait->created_at;
+				$newObject->updated_at = $trait->updated_at;
 
-			$newObject->save();
+				$newObject->save();
+			}
 		}
 	}
 }

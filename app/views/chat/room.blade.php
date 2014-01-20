@@ -4,7 +4,7 @@
 			<div class="panel-heading">
 				<strong class="text-info">Chat Room:</strong>&nbsp;<strong class="text-error">{{ $chatRoom->name }}</strong>
 				<div class="panel-btn">
-					{{ HTML::link('chat/fullChat/'. $chatRoom->id, 'Full Transcript', array('target' => '_blank')) }}
+					{{ HTML::link('chat/full-chat/'. $chatRoom->id, 'Full Transcript', array('target' => '_blank')) }}
 				</div>
 			</div>
 			<div id="chatBox" style="padding: 5px 0px 0px 5px;"></div>
@@ -68,6 +68,17 @@
 					Use Enter to submit your message.
 				</span>
 			</div>
+			@if ($chatRoom->game_id != null)
+				<div class="col-md-4">
+					/roll to roll a D100<br />
+					/<a href="javascript: void(0);" rel="popover" data-toggle="popover" data-placement="top" data-content="<?=implode('<br />',$skills)?>" data-html="true" title data-original-title="Examples">(Skill)</a> to see your skill stats (ex /Dance)<br />
+					/spell <a href="javascript: void(0);" rel="popover" data-toggle="popover" data-placement="top" data-content="<?=implode('<br />',$spells)?>" data-html="true" title data-original-title="Examples">(Spell)</a> to cast your spell!
+				</div>
+				<div class="col-md-4">
+					/attribute <a href="javascript: void(0);" rel="popover" data-toggle="popover" data-placement="top" data-content="<?=implode('<br />',$attributes)?>" data-html="true" title data-original-title="Examples">(Attribute)</a> to get your attribute and modifier!<br />
+					/<a href="javascript: void(0);" rel="popover" data-toggle="popover" data-placement="top" data-content="<?=implode('<br />',$secondaries)?>" data-html="true" title data-original-title="Examples">(Secondary Attribute)</a> to see your value (ex /Attack)
+				</div>
+			@endif
 		</div>
 	</div>
 </div>

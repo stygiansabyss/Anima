@@ -297,6 +297,7 @@ return array(
 	'nonCoreAliases' => array(
 		'User',
 		'Chat',
+		'Chat_Room',
 	),
 
 );

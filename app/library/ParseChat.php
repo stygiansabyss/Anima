@@ -20,6 +20,15 @@ class ParseChat {
 		return $result;
 	}
 
+	public function parseForCreate($message, $morphId, $morphType)
+	{
+		$this->message = $message;
+		$parsedMessage = BBCode::parse($message);
+		$parsedMessage = $this->parseCharacterStatsForCreate($parsedMessage, $morphId, $morphType);
+
+		return $parsedMessage;
+	}
+
 	public function setUpMessageArray($message, $parsedMessage, $messageOnly)
 	{
 		$newMessage = array();
@@ -54,12 +63,50 @@ class ParseChat {
 	public function setText($message, $parsedMessage, $link)
 	{
 		return '
-			<small class="muted">
+			<small class="text-muted">
 				('. $message->created_at.')
 			</small>'.
 			$link .': '. $parsedMessage.'
 			<br />
 		';
+	}
+
+	public function parseCharacterStatsForCreate($parsedMessage, $morphId, $morphType)
+	{
+		if ($morphId != null) {
+			$this->character = $morphType::find($morphId);
+			$rootClass       = getRootClass($this->character);
+
+			// Entities have no stats
+			if ($rootClass != 'Entity') {
+
+				// Handle the attributes
+				$attributes = \Attribute::all();
+				if (count($attributes) > 0) {
+					$parsedMessage = $this->parseAttributes($attributes, $parsedMessage);
+				}
+
+				// Handle the skills
+				$skills = \Skill::all();
+				if (count($skills) > 0) {
+					$parsedMessage = $this->parseSkills($skills, $parsedMessage);
+				}
+
+				// Handle secondary attributes
+				$secondaryAttributes = \Attribute_Secondary::all();
+				if (count($secondaryAttributes) > 0) {
+					$parsedMessage = $this->parseSecondaryAttributes($secondaryAttributes, $parsedMessage);
+				}
+
+				// Handle spells
+				$spells = \Character_Spell::where('morph_id', $this->character->id)->where('morph_type', $rootClass)->get();
+				if (count($spells) > 0) {
+					$parsedMessage = $this->parseSpells($spells, $parsedMessage);
+				}
+			}
+		}
+
+		return $parsedMessage;
 	}
 
 	public function parseCharacterStats($message, $parsedMessage)
