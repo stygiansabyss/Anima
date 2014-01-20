@@ -8,7 +8,7 @@ Route::get('logout', function()
 });
 
 // Non-Secure routes
-Route::controller('api' , 'Core_ApiVersionOneController');
+Route::controller('api' , 'ApiVersionOneController');
 
 // Secure routes
 /********************************************************************
@@ -21,7 +21,7 @@ Route::group(array('before' => 'auth'), function()
 
 	Route::controller('user'					, 'Core_UserController');
 	Route::controller('messages'				, 'Core_MessageController');
-	Route::controller('chat'					, 'Core_ChatController');
+	Route::controller('chat'					, 'ChatController');
 	Route::controller('github'					, 'Core_GithubController');
 
 	Route::controller('character/spell'			, 'Character_SpellController');

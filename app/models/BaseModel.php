@@ -40,6 +40,41 @@ class BaseModel extends Core_BaseModel {
 		return false;
 	}
 
+	public function getValue($type, $id)
+	{
+		switch ($type) {
+			case 'Appearance':
+				$resource = Character_Appearance::where('morph_id', $this->id)->where('appearance_id', $id)->first();
+			break;
+			case 'Stat':
+				$resource = Character_Stat::where('morph_id', $this->id)->where('stat_id', $id)->first();
+			break;
+			case 'Attribute':
+				$resource = Character_Attribute::where('morph_id', $this->id)->where('attribute_id', $id)->first();
+			break;
+			case 'AttributeMod':
+				$resource = Character_Attribute::where('morph_id', $this->id)->where('attribute_id', $id)->first();
+			break;
+			case 'SecondaryAttribute':
+				$resource = Character_Attribute_Secondary::where('morph_id', $this->id)->where('attribute_id', $id)->first();
+			break;
+			case 'Skill':
+				$resource = Character_Skill::where('morph_id', $this->id)->where('skill_id', $id)->first();
+			break;
+			case 'Trait':
+				$resource = Character_Trait::where('morph_id', $this->id)->where('trait_id', $id)->first();
+			break;
+		}
+		if ($resource != null) {
+			if ($type == 'AttributeMod') {
+				return $resource->value .' ('. ($resource->modifier > 0 ? '+'. $resource->modifier : $resource->modifier).')';
+			} else {
+				return $resource->value;
+			}
+		}
+		return null;
+	}
+
 	public static function createCharacter($forcedRolls = false)
 	{
 		$class = get_called_class();

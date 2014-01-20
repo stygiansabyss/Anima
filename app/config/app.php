@@ -128,7 +128,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://localhost',
+	'url' => 'http://dev.anima.stygianvault.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -220,6 +220,7 @@ return array(
 		'Juy\Profiler\Providers\ProfilerServiceProvider',
 		'Intervention\Image\ImageServiceProvider',
 		'McCool\LaravelAutoPresenter\LaravelAutoPresenterServiceProvider',
+		'Library\ParseChatServiceProvider',
 		'Core\View\ViewServiceProvider',
 		'Core\Forum\ForumServiceProvider',
 		'Core\Control\CoreBugServiceProvider',
@@ -289,11 +290,13 @@ return array(
 		'Str'         => 'Illuminate\Support\Str',
 		'URL'         => 'Illuminate\Support\Facades\URL',
 		'Image'       => 'Intervention\Image\Facades\Image',
+		'ParseChat'   => 'Library\Facades\ParseChat',
 
 	),
 
 	'nonCoreAliases' => array(
 		'User',
+		'Chat',
 	),
 
 );

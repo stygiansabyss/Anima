@@ -16,7 +16,7 @@ try {
 	var config = JSON.parse( fs.readFileSync('chatConfig.json') );
 
 	if (!('port' in config) || !('apiEndPoint' in config)) {
-		throw "Your configuration must have atleast a port and apiEndPoint";
+		throw "Your configuration must have at least a port and apiEndPoint";
 	}
 } catch ( error ) {
 	console.error("Configuration file error: " + error);

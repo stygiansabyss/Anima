@@ -45,6 +45,10 @@ class Character_Attribute extends BaseModel {
 	/********************************************************************
 	 * Getter and Setter methods
 	 *******************************************************************/
+	public function getModifierAttribute()
+	{
+		return Attribute_Modifier::where('value', $this->value)->first()->modifier;
+	}
 	
 	/********************************************************************
 	 * Extra Methods
