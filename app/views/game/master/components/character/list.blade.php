@@ -76,6 +76,7 @@
 									{{ $character->expHistoryButton }}
 									{{ $character->hiddenButton }}
 									{{ $character->activeButton }}
+									{{ $character->statusButton($game->id) }}
 									{{ $character->editButton($game->id) }}
 									{{ $character->deleteButton }}
 								</div>

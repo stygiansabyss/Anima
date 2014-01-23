@@ -59,7 +59,7 @@ return array(
 	|
 	*/
 
-	'primaryRepo' => 'control-room',
+	'primaryRepo' => 'Anima',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -71,12 +71,17 @@ return array(
 	*/
 
 	'allRepos' => array(
+		'riddles8888' => array(
 			'control-room' => 'Control-Room',
 			'stygianvault' => 'StygianVault',
 			'AHScoreboard' => 'AH Scoreboard',
-			'dev-toolbox' => 'Dev-Toolbox',
-			'core' => 'Core',
-			'LaravelBase' => 'Laravel Base',
+			'dev-toolbox'  => 'Dev-Toolbox',
+			'core'         => 'Core',
+			'LaravelBase'  => 'Laravel Base',
+		),
+		'stygiansabyss' => array(
+			'Anima' => 'Anima'
+		),
 	),
 
 	/*
@@ -220,12 +225,12 @@ return array(
 		'Juy\Profiler\Providers\ProfilerServiceProvider',
 		'Intervention\Image\ImageServiceProvider',
 		'McCool\LaravelAutoPresenter\LaravelAutoPresenterServiceProvider',
-		'Library\ParseChatServiceProvider',
 		'Core\View\ViewServiceProvider',
 		'Core\Forum\ForumServiceProvider',
 		'Core\Control\CoreBugServiceProvider',
 		'Core\Utility\UtilityServiceProvider',
 		'Core\Utility\AliasServiceProvider',
+		'Library\ParseChatServiceProvider',
 
 	),
 

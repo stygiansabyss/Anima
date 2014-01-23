@@ -11,7 +11,7 @@ class StatusesTableSeeder extends Seeder {
             array(
                 'name'        => 'Active',
                 'keyName'     => 'ACTIVE',
-                'description' => 'This character is actively being played.'
+                'description' => 'This object is actively being used.'
             ),
             array(
                 'name'        => 'Approved',
@@ -26,7 +26,7 @@ class StatusesTableSeeder extends Seeder {
             array(
                 'name'        => 'Banned',
                 'keyName'     => 'BANNED',
-                'description' => 'This character is banned from ever being played again.'
+                'description' => 'This object is banned from ever being used again.'
             ),
             array(
                 'name'        => 'Dead',
@@ -46,7 +46,7 @@ class StatusesTableSeeder extends Seeder {
             array(
                 'name'        => 'Inactive',
                 'keyName'     => 'INACTIVE',
-                'description' => 'The character is no longer being actively played.'
+                'description' => 'The object is no longer being actively used.'
             ),
             array(
                 'name'        => 'NPC',

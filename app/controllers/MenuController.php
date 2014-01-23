@@ -34,6 +34,12 @@ class MenuController extends Core_BaseController
 			// Chats
 			Menu::addMenuItem('Chats', 'chat', null, 2);
 
+			$chatRooms = Chat_Room::active()->orderByNameAsc()->get();
+
+			foreach ($chatRooms as $chatRoom) {
+				Menu::addMenuChild('Chats', $chatRoom->name, 'chat/room/'. $chatRoom->id);
+			}
+
 			// GM Areas
 			if ($this->hasPermission('GAME_MASTER')) {
 				Menu::addMenuItem('Game Master', 'game/master', null, 3)

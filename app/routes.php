@@ -52,6 +52,7 @@ Route::group(array('before' => 'auth|permission:GAME_MASTER'), function()
 	Route::controller('game/master/entity'			, 'Game_Master_EntityController');
 
 	Route::controller('game/master'					, 'Game_MasterController');
+	Route::controller('game'						, 'GameController');
 });
 
 /********************************************************************

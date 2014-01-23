@@ -11,13 +11,51 @@ class CharacterPresenter extends Core\CorePresenter {
 		return 'Unknown';
 	}
 
+	public function hitPointsPercent()
+	{
+		$percentObject = new stdClass();
+		$percentObject->percent = percent($this->resource->details->tempHitPoints, $this->resource->details->hitPoints);
+
+		if ($percentObject->percent >= 75) {
+			$percentObject->progressClass = '';
+			$percentObject->barClass      = 'progress-bar progress-bar-info';
+		} elseif ($percentObject->percent >= 25) {
+			$percentObject->progressClass = '';
+			$percentObject->barClass      = 'progress-bar progress-bar-warning';
+		} else {
+			$percentObject->progressClass = 'progress-striped active';
+			$percentObject->barClass      = 'progress-bar progress-bar-danger';
+		}
+
+		return $percentObject;
+	}
+
+	public function magicPointsPercent()
+	{
+		$percentObject = new stdClass();
+		$percentObject->percent = percent($this->resource->details->tempMagicPoints, $this->resource->details->magicPoints);
+
+		if ($percentObject->percent >= 75) {
+			$percentObject->progressClass = '';
+			$percentObject->barClass      = 'progress-bar progress-bar-info';
+		} elseif ($percentObject->percent >= 25) {
+			$percentObject->progressClass = '';
+			$percentObject->barClass      = 'progress-bar progress-bar-warning';
+		} else {
+			$percentObject->progressClass = 'progress-striped active';
+			$percentObject->barClass      = 'progress-bar progress-bar-danger';
+		}
+
+		return $percentObject;
+	}
+
 	public function avatar()
 	{
 		$class     = getRootClass($this->resource);
 		$imagePath = 'img/avatars/'. $class .'/'. Str::studly($this->resource->name) .'.png';
 
 		if (file_exists(public_path() .'/'. $imagePath)) {
-			return HTML::image($imagePath, null, array('style' => 'width: 64px; max-height: 64px;'));
+			return HTML::image($imagePath, null, array('style' => 'max-width: 64px; max-height: 64px;'));
 		}
 
 		return HTML::image('img/no_user.png', null, array('style' => 'width: 64px; max-height: 64px;'));
@@ -52,6 +90,16 @@ class CharacterPresenter extends Core\CorePresenter {
 			($this->resource->activeFlag == 1 ? 'fa fa-check' : 'fa fa-times'),
 			null,
 			array('class' => 'btn btn-xs btn-primary', 'title' => ($this->resource->activeFlag == 1 ? 'Make Inactive' : 'Make Active'))
+		);
+	}
+
+	public function statusButton($gameId)
+	{
+		return HTML::linkIcon(
+			'/game/master/character-status/'. $this->resource->id .'/'. getRootClass($this->resource) .'/'. $gameId,
+			'fa fa-bars',
+			null,
+			array('class' => 'btn btn-xs btn-primary', 'title' => 'Set statuses')
 		);
 	}
 

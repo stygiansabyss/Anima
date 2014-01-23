@@ -358,17 +358,23 @@ class Helper_Character extends Helper_Forum {
 			$characters = Character::all();
 
 			foreach ($characters as $character) {
-				$this->convertSkills($character, 'Character');
+				if ($this->confirm('Do you wish to move character skills for '. $character->name .'? [yes|no]')) {
+					$this->convertSkills($character, 'Character');
+				}
 			}
 			$enemies = Enemy::all();
 
 			foreach ($enemies as $enemy) {
-				$this->convertSkills($enemy, 'Enemy');
+				if ($this->confirm('Do you wish to move character skills for '. $enemy->name .'? [yes|no]')) {
+					$this->convertSkills($enemy, 'Enemy');
+				}
 			}
 			$creatures = Creature::all();
 
 			foreach ($creatures as $creature) {
-				$this->convertSkills($creature, 'Creature');
+				if ($this->confirm('Do you wish to move character skills for '. $creature->name .'? [yes|no]')) {
+					$this->convertSkills($creature, 'Creature');
+				}
 			}
 			$this->info('Character skills moved');
 		} else {
@@ -460,6 +466,16 @@ class Helper_Character extends Helper_Forum {
 
 		$newObject->save();
 
+		if ($object->approvedFlag == 1) {
+			$this->addStatusToCharacter('APPROVED', $newObject->id, 'Character');
+		}
+
+		if ($object->activeFlag == 1) {
+			$this->addStatusToCharacter('ACTIVE', $newObject->id, 'Character');
+		} else {
+			$this->addStatusToCharacter('INACTIVE', $newObject->id, 'Character');
+		}
+
 		$this->addCharacterToGame('Character', $newObject->id, $oldGameNewId);
 	}
 
@@ -475,12 +491,17 @@ class Helper_Character extends Helper_Forum {
 
 		$newObject->save();
 
-		$newStatus             = new Character_Status;
-		$newStatus->morph_id   = $newObject->id;
-		$newStatus->morph_type = 'Character';
-		$newStatus->status_id  = 6;
+		if ($object->approvedFlag == 1) {
+			$this->addStatusToCharacter('APPROVED', $newObject->id, 'Character');
+		}
 
-		$newStatus->save();
+		if ($object->activeFlag == 1) {
+			$this->addStatusToCharacter('ACTIVE', $newObject->id, 'Character');
+		} else {
+			$this->addStatusToCharacter('INACTIVE', $newObject->id, 'Character');
+		}
+
+		$this->addStatusToCharacter('NPC', $newObject->id, 'Character');
 
 		$this->addCharacterToGame('Character', $newObject->id, $oldGameNewId);
 	}
@@ -497,6 +518,16 @@ class Helper_Character extends Helper_Forum {
 
 		$newObject->save();
 
+		if ($object->approvedFlag == 1) {
+			$this->addStatusToCharacter('APPROVED', $newObject->id, 'Enemy');
+		}
+
+		if ($object->activeFlag == 1) {
+			$this->addStatusToCharacter('ACTIVE', $newObject->id, 'Enemy');
+		} else {
+			$this->addStatusToCharacter('INACTIVE', $newObject->id, 'Enemy');
+		}
+
 		$this->addCharacterToGame('Enemy', $newObject->id, $oldGameNewId);
 	}
 	protected function moveCreatures($object, $oldGameNewId)
@@ -510,6 +541,16 @@ class Helper_Character extends Helper_Forum {
 		$newObject->oldId      = $object->id;
 
 		$newObject->save();
+
+		if ($object->approvedFlag == 1) {
+			$this->addStatusToCharacter('APPROVED', $newObject->id, 'Creature');
+		}
+
+		if ($object->activeFlag == 1) {
+			$this->addStatusToCharacter('ACTIVE', $newObject->id, 'Creature');
+		} else {
+			$this->addStatusToCharacter('INACTIVE', $newObject->id, 'Creature');
+		}
 
 		$this->addCharacterToGame('Creature', $newObject->id, $oldGameNewId);
 	}
@@ -525,15 +566,21 @@ class Helper_Character extends Helper_Forum {
 
 		$newObject->save();
 
-		$newStatus             = new Character_Status;
-		$newStatus->morph_id   = $newObject->id;
-		$newStatus->morph_type = 'Creature';
-		$newStatus->status_id  = 10;
+		if ($object->approvedFlag == 1) {
+			$this->addStatusToCharacter('APPROVED', $newObject->id, 'Creature');
+		}
 
-		$newStatus->save();
+		if ($object->activeFlag == 1) {
+			$this->addStatusToCharacter('ACTIVE', $newObject->id, 'Creature');
+		} else {
+			$this->addStatusToCharacter('INACTIVE', $newObject->id, 'Creature');
+		}
+
+		$this->addStatusToCharacter('ENEMY', $newObject->id, 'Creature');
 
 		$this->addCharacterToGame('Creature', $newObject->id, $oldGameNewId);
 	}
+
 	protected function moveEntities($object)
 	{
 		$newObject             = new Entity;
@@ -544,6 +591,17 @@ class Helper_Character extends Helper_Forum {
 		$newObject->oldId      = $object->id;
 
 		$newObject->save();
+	}
+
+	protected function addStatusToCharacter($statusKeyName, $morphId, $morphType)
+	{
+
+		$newStatus             = new Character_Status;
+		$newStatus->morph_id   = $morphId;
+		$newStatus->morph_type = $morphType;
+		$newStatus->status_id  = Status::where('keyName', $statusKeyName)->first()->id;
+
+		$newStatus->save();
 	}
 
 	protected function addCharacterToGame($type, $id, $gameId)
@@ -800,9 +858,11 @@ class Helper_Character extends Helper_Forum {
 	{
 		$existingSkillIds = Character_Skill::where('morph_id', $character->id)->where('morph_type', $type)->get()->skill_id->toArray();
 		$skills  = DB::table('stygian_main.character_skills')
-			->where('stygian_main.character_skills.character_id', $character->oldId)
-			->whereNotIn('stygian_main.character_skills.game_template_skill_id', $existingSkillIds)
-			->get();
+			->where('stygian_main.character_skills.character_id', $character->oldId);
+		if (count($existingSkillIds) > 0) {
+			$skills->whereNotIn('stygian_main.character_skills.game_template_skill_id', $existingSkillIds);
+		}
+		$skills = $skills->get();
 
 		if (count($skills) > 0) {
 			foreach ($skills as $skill) {

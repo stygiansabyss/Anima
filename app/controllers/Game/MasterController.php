@@ -82,4 +82,39 @@ class Game_MasterController extends BaseController {
 		$this->setViewData('character', $character);
 	}
 
+	public function getCharacterStatus($characterId, $type, $gameId)
+	{
+		$character = $type::find($characterId);
+
+		$statuses          = Status::orderByNameAsc()->get()->toSelectArray();
+		$characterStatuses = Character_Status::where('morph_id', $characterId)->where('morph_type', $type)->get()->status_id->toArray();
+
+		$this->setViewPath('game.master.components.character.status');
+		$this->setViewData('character', $character);
+		$this->setViewData('statuses', $statuses);
+		$this->setViewData('characterStatuses', $characterStatuses);
+		$this->setViewData('gameId', $gameId);
+	}
+
+	public function postCharacterStatus($characterId, $type, $gameId)
+	{
+		$statuses = Input::get('status');
+		$existingStatuses = Character_Status::where('morph_id', $characterId)->where('morph_type', $type)->get();
+
+		$existingStatuses->delete();
+
+		if (count($statuses) > 0) {
+			foreach ($statuses as $statusId) {
+				$newStatus             = new Character_Status;
+				$newStatus->morph_id   = $characterId;
+				$newStatus->morph_type = $type;
+				$newStatus->status_id  = $statusId;
+
+				$this->save($newStatus);
+			}
+		}
+
+		return $this->redirect('/game/master/manage/'. $gameId, 'Character statuses updated.');
+	}
+
 }

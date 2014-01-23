@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder {
 		$this->call('SeedsTableSeeder');
 		$this->call('PreferencesTableSeeder_Update_12_17_2013');
 		$this->call('PreferencesTableSeeder_Update_01_09_2014');
+		$this->call('PreferencesTableSeeder_Update_01_21_2014');
 		$this->call('StatusesTableSeeder');
 	}
 

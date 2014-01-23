@@ -97,7 +97,7 @@
 
 	$( document ).idleTimer( 600000 );
 
-	var socket = io.connect('http://dev-toolbox.com:1337');
+	var socket = io.connect("{{ Config::get('app.url') }}:1337");
 
 	var reconnect = false;
 
@@ -121,7 +121,7 @@
         reconnect = true;
 
         socket.disconnect();
-        socket = io.connect('http://dev.anima.stygianvault.com:1337');
+        socket = io.connect("{{ Config::get('app.url') }}:1337");
     });
 
     socket.on('connect', function () {
@@ -142,6 +142,8 @@
         	$('#chatBox').html(chatLog.join(''));
 
 			chatScroll();
+
+			checkTimestamps();
         });
 
         // Update the userlist when a user connects or disconnects.
@@ -153,6 +155,8 @@
             $('#chatBox').append(message);
 
 			chatScroll();
+
+			checkTimestamps();
 
 			$.titleAlert("New message!", {
 				requireBlur:true,
@@ -203,6 +207,16 @@
 
 		$('#message').val('');
 	});
+
+	var preference = "{{ CoreView::getActiveUser()->getPreferenceValueByKeyName('CHAT_TIMESTAMPS') }}";
+
+	function checkTimestamps() {
+		if (preference == 'off') {
+			$('.timestamp').each(function() {
+				$(this).hide();
+			});
+		}
+	}
 
 	function chatScroll() {
 		$('#chatBox').slimScroll({

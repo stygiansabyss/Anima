@@ -63,11 +63,19 @@ class ParseChat {
 	public function setText($message, $parsedMessage, $link)
 	{
 		return '
-			<small class="text-muted">
-				('. $message->created_at.')
-			</small>'.
-			$link .': '. $parsedMessage.'
-			<br />
+		<div class="row">
+			<div class="col-md-2">'.
+				$link .':
+				<small class="text-muted timestamp">
+					<br />
+					('. $message->created_at.')
+				</small>
+			</div>
+			<div class="col-md-10">
+				'. $parsedMessage.'
+			</div>
+		</div>
+		<br />
 		';
 	}
 

@@ -58,7 +58,32 @@ class Game extends BaseModel {
 		$characters = $this->characters->filter(function ($character) {
 			if ($character->morph->checkStatus(array('DEAD', 'INACTIVE', 'NPC'))) return false;
 			if ($character->morph_type == 'Character') return true;
-		})->morph;
+		})->morph->sortBy(function ($character) {
+			return $character->name;
+		});
+
+		return $characters;
+	}
+
+	public function getAllPlayerCharactersAttribute()
+	{
+		$characters = $this->characters->filter(function ($character) {
+			if ($character->morph_type == 'Character') return true;
+		})->morph->sortBy(function ($character) {
+			return $character->name;
+		});
+
+		return $characters;
+	}
+
+	public function getCreaturesAttribute()
+	{
+		$characters = $this->characters->filter(function ($character) {
+			if ($character->morph->checkStatus(array('DEAD', 'INACTIVE'))) return false;
+			if ($character->morph_type == 'Creature') return true;
+		})->morph->sortBy(function ($character) {
+			return $character->name;
+		});
 
 		return $characters;
 	}
@@ -69,7 +94,9 @@ class Game extends BaseModel {
 			if ($character->morph->checkStatus(array('DEAD', 'INACTIVE'))) return false;
 			if ($character->morph->checkStatus(array('NPC'))) return true;
 			if ($character->morph_type == 'Enemy') return true;
-		})->morph;
+		})->morph->sortBy(function ($character) {
+			return $character->name;
+		});
 
 		return $characters;
 	}
@@ -78,6 +105,8 @@ class Game extends BaseModel {
 	{
 		$characters = $this->characters->morph->filter(function ($character) {
 			if ($character->checkStatus(array('DEAD', 'INACTIVE'))) return true;
+		})->sortBy(function ($character) {
+			return $character->name;
 		});
 
 		return $characters;

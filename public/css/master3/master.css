@@ -7204,6 +7204,10 @@ h6 {
 /*
 /////////////////////////////////////////////////////// Wells & Panels /////////////////////////////////////////////////////////
 */
+.thumbnail.well {
+  padding: 19px !important;
+  border: none;
+}
 .well hr {
   border: none;
   height: 1px;
