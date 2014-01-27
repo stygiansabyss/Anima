@@ -1,6 +1,6 @@
 <?php
 
-class Character extends BaseModel {
+class Character extends BaseCharacter {
 	/********************************************************************
 	 * Declarations
 	 *******************************************************************/
@@ -68,38 +68,6 @@ class Character extends BaseModel {
 	/********************************************************************
 	 * Getter and Setter methods
 	 *******************************************************************/
-	public function getRaceAttribute()
-	{
-		$race = $this->stats->filter(function ($stat) {
-			if ($stat->stat->name == 'Race') {
-				return true;
-			}
-		});
-
-		return $race->value;
-	}
-
-	public function getAdvantagesAttribute()
-	{
-		$advantages = $this->traits->filter(function ($trait) {
-			if ($trait->trait->advantageFlag == 1) {
-				return true;
-			}
-		});
-
-		return $advantages;
-	}
-
-	public function getDisadvantagesAttribute()
-	{
-		$disadvantages = $this->traits->filter(function ($trait) {
-			if ($trait->trait->advantageFlag == 0) {
-				return true;
-			}
-		});
-
-		return $disadvantages;
-	}
 
 	/********************************************************************
 	 * Extra Methods

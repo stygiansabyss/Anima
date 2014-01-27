@@ -23,12 +23,12 @@
 								<td>{{ HTML::link('/user/view/'. $character->user->id, $character->user->username) }}</td>
 							</tr>
 							<tr>
-								<td style="font-weight: bold;">Game:</td>
-								<td>&nbsp;</td>
+								<td style="font-weight: bold;">Game(s):</td>
+								<td>{{ implode(', ', $character->games->game->name->toArray()) }}</td>
 							</tr>
 							<tr>
 								<td style="font-weight: bold">Class:</td>
-								<td>{{ $character->class->gameClass->name }}</td>
+								<td>{{ $character->className }}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -37,41 +37,46 @@
 			<div class="clearfix"></div>
 		</div>
 		@if ($character->user->id == $activeUser->id || $activeUser->checkPermission('GAME_MASTER'))
-			@if (count($character->inventory) > 0 || count($character->currency) > 0)
-				<div class="well">
-					<div class="well-title">
-						<a class="accordion-toggle" data-toggle="collapse" href="#inventory" onClick="$(this).children().toggleClass('fa fa-chevron-down').toggleClass('fa fa-chevron-up');">
-							Currency/Inventory <i class="fa fa-chevron-down"></i>
-						</a>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<a class="accordion-toggle" data-toggle="collapse" href="#currency" onClick="$(this).children().toggleClass('fa fa-chevron-down').toggleClass('fa fa-chevron-up');">
+						Currency <i class="fa fa-chevron-down"></i>
+					</a>
+				</div>
+				<table id="currency" class="table table-condensed table-hover accordion-body collapse">
+					<tbody>
+						<tr>
+							<td>Gold</td>
+							<td>{{ $character->details->gold }}</td>
+						</tr>
+						<tr>
+							<td>Silver</td>
+							<td>{{ $character->details->silver }}</td>
+						</tr>
+						<tr>
+							<td>Copper</td>
+							<td>{{ $character->details->copper }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<a class="accordion-toggle" data-toggle="collapse" href="#inventory" onClick="$(this).children().toggleClass('fa fa-chevron-down').toggleClass('fa fa-chevron-up');">
+						Inventory <i class="fa fa-chevron-down"></i>
+					</a>
+				</div>
+				<div class="list-group accordion-body collapse" id="inventory">
+					<div class="list-group-item">
+						<h5 class="list-group-item-heading">Armor & Weapons</h5>
+						<div class="list-group-item-text">{{ $character->details->armorWeapons }}</div>
 					</div>
-					<div id="inventory" class="accordion-body collapse">
-						@foreach ($character->currency as $currency)
-							@if ($currency->value != null)
-								<table class="table table-condensed table-hover text-center">
-									<caption>{{ $currency->gameCurrency->name }}</caption>
-									<tbody>
-										<tr>
-											<td>{{ nl2br($currency->value) }}</td>
-										</tr>
-									</tbody>
-								</table>
-							@endif
-						@endforeach
-						@foreach ($character->inventory as $inventory)
-							@if ($inventory->value != null)
-								<table class="table table-condensed table-hover text-center">
-									<caption>{{ $inventory->gameInventory->name }}</caption>
-									<tbody>
-										<tr>
-											<td>{{ nl2br($inventory->value) }}</td>
-										</tr>
-									</tbody>
-								</table>
-							@endif
-						@endforeach
+					<div class="list-group-item">
+						<h5 class="list-group-item-heading">general Items</h5>
+						<div class="list-group-item-text">{{ $character->details->generalItems }}</div>
 					</div>
 				</div>
-			@endif
+			</div>
 		@endif
 	</div>
 	<div class="col-md-4">
@@ -133,7 +138,7 @@
 						</table>
 					</div>
 				@endif
-				@if (count($character->characterAttributes) > 0)
+				@if (count($character->attributes) > 0)
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<a class="accordion-toggle" data-toggle="collapse" href="#attributes" onClick="$(this).children().toggleClass('fa fa-chevron-down').toggleClass('fa fa-chevron-up');">
@@ -148,7 +153,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach ($character->characterAttributes as $attribute)
+								@foreach ($character->attributes as $attribute)
 									@if (!is_null($attribute->value))
 										<tr>
 											<td>{{ $attribute->attribute->name }}</td>

@@ -4,101 +4,6 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
-	| Application Games Enabled
-	|--------------------------------------------------------------------------
-	|
-	| This flag is used to determine if the site uses games.  If it is set to true
-	| any area allowing for game integration will look for it.  Otherwise, it will
-	| skip them entirely.
-	|
-	*/
-	'gameMode' => false,
-
-	/*
-	|--------------------------------------------------------------------------
-	| Application Forum for News
-	|--------------------------------------------------------------------------
-	|
-	| This flag is used to determine if the site uses the forum system to control
-	| the front page.  If set to false, there will be no options to promote posts
-	| to the front page.
-	|
-	*/
-	'forumNews' => true,
-
-	/*
-	|--------------------------------------------------------------------------
-	| Control-Room Site detail
-	|--------------------------------------------------------------------------
-	|
-	| Set this to the site's control room data.  Get this from stygian or riddles
-	*/
-	'controlRoomDetail' => 'CONTROL_ANIMA',
-
-	/*
-	|--------------------------------------------------------------------------
-	| Site Details
-	|--------------------------------------------------------------------------
-	|
-	| The name of your site and the icon it should use.  This will show up in 
-	| twitter menues.  Set the siteIcon to null for no icon.
-	|
-	*/
-
-	'siteName' => 'Anima',
-	'siteIcon' => null,
-
-	/*
-	|--------------------------------------------------------------------------
-	| Github repo
-	|--------------------------------------------------------------------------
-	|
-	| If your site uses a github repo, set it's name here. This will 
-	| allow the application to give it priority in certain areas
-	| over other repos that may be shown.
-	|
-	*/
-
-	'primaryRepo' => 'Anima',
-
-	/*
-	|--------------------------------------------------------------------------
-	| All github repos
-	|--------------------------------------------------------------------------
-	|
-	| The full list of repo names you want displayed in the site.
-	|
-	*/
-
-	'allRepos' => array(
-		'riddles8888' => array(
-			'control-room' => 'Control-Room',
-			'stygianvault' => 'StygianVault',
-			'AHScoreboard' => 'AH Scoreboard',
-			'dev-toolbox'  => 'Dev-Toolbox',
-			'core'         => 'Core',
-			'LaravelBase'  => 'Laravel Base',
-		),
-		'stygiansabyss' => array(
-			'Anima' => 'Anima'
-		),
-	),
-
-	/*
-	|--------------------------------------------------------------------------
-	| Application Menu
-	|--------------------------------------------------------------------------
-	|
-	| This variable is used to determine if the site uses the default twitter nav
-	| bar or any form of custom menu.  Set this value to the name of the blade
-	| located in views/layouts/menus that you wish to use.
-	| Options: twitter, utopian
-	|
-	*/
-	'menu' => 'utopian',
-
-	/*
-	|--------------------------------------------------------------------------
 	| Application Maintenance Mode
 	|--------------------------------------------------------------------------
 	|
@@ -225,11 +130,12 @@ return array(
 		'Juy\Profiler\Providers\ProfilerServiceProvider',
 		'Intervention\Image\ImageServiceProvider',
 		'McCool\LaravelAutoPresenter\LaravelAutoPresenterServiceProvider',
-		'Core\View\ViewServiceProvider',
-		'Core\Forum\ForumServiceProvider',
-		'Core\Control\CoreBugServiceProvider',
-		'Core\Utility\UtilityServiceProvider',
-		'Core\Utility\AliasServiceProvider',
+		'Syntax\Core\CoreServiceProvider',
+		'Syntax\Core\View\ViewServiceProvider',
+		'Syntax\Core\Forum\ForumServiceProvider',
+		'Syntax\Core\Control\CoreBugServiceProvider',
+		'Syntax\Core\Utility\UtilityServiceProvider',
+		'Syntax\Core\Utility\AliasServiceProvider',
 		'Library\ParseChatServiceProvider',
 
 	),
@@ -297,12 +203,6 @@ return array(
 		'Image'       => 'Intervention\Image\Facades\Image',
 		'ParseChat'   => 'Library\Facades\ParseChat',
 
-	),
-
-	'nonCoreAliases' => array(
-		'User',
-		'Chat',
-		'Chat_Room',
 	),
 
 );

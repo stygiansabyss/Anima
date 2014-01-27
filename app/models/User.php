@@ -1,6 +1,6 @@
 <?php
 
-class User extends Core\User {
+class User extends Syntax\Core\User {
 	/********************************************************************
 	 * Relationships
 	 *******************************************************************/

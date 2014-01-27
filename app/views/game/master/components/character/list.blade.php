@@ -55,7 +55,7 @@
 							<td>
 								{{ HTML::link('character/sheet/'. $character->id, $character->name, array('target' => '_blank')) }}
 								@if ($character->details->hitPoints == 0)
-									<small class="text-error">(Desceased)</small>
+									<small class="text-error">(Deceased)</small>
 								@endif
 							</td>
 							<td>

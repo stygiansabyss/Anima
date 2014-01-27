@@ -13,5 +13,5 @@
 
 Artisan::add(new MigrationCommand);
 Artisan::resolve('MigrationCommand');
-Artisan::add(new UpgradeCommand);
-Artisan::resolve('UpgradeCommand');
+// Artisan::add(new UpgradeCommand);
+// Artisan::resolve('UpgradeCommand');

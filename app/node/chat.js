@@ -9,11 +9,11 @@ var httpsync	= require("httpsync");
  * Configure the application
  */
 try {
-	if (!fs.existsSync('chatConfig.json')) {
+	if (!fs.existsSync('../config/packages/syntax/core/chatConfig.json')) {
 		throw "Configuration file does not exist.";
 	}
 
-	var config = JSON.parse( fs.readFileSync('chatConfig.json') );
+	var config = JSON.parse( fs.readFileSync('../config/packages/syntax/core/chatConfig.json') );
 
 	if (!('port' in config) || !('apiEndPoint' in config)) {
 		throw "Your configuration must have at least a port and apiEndPoint";

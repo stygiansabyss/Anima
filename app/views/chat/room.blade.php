@@ -101,58 +101,58 @@
 
 	var reconnect = false;
 
-    socket.on('connecting', function () {
-    	if (reconnect == true) {
-    		location.reload();
-    		throw new Error('This is not an error. This is just to abort javascript');
-    	}
+	socket.on('connecting', function () {
+		if (reconnect == true) {
+			location.reload();
+			throw new Error('This is not an error. This is just to abort javascript');
+		}
 
-        Messenger().post({message: 'Connecting to chat...', hideAfter: 3});
-    });
+		Messenger().post({message: 'Connecting to chat...', hideAfter: 3});
+	});
 
-    socket.on('error', function () {
-        Messenger().post({message: 'Chat server offline :(',type: 'error'});
-    });
+	socket.on('error', function () {
+		Messenger().post({message: 'Chat server offline :(',type: 'error'});
+	});
 
-    socket.on('reconnecting', function () {
-        Messenger().post({message: 'Connection to chat lost. Reconnecting...',type: 'error'});
-        $('#message').attr("disabled", "disabled");
+	socket.on('reconnecting', function () {
+		Messenger().post({message: 'Connection to chat lost. Reconnecting...',type: 'error'});
+		$('#message').attr("disabled", "disabled");
 
-        reconnect = true;
+		reconnect = true;
 
-        socket.disconnect();
-        socket = io.connect("{{ Config::get('app.url') }}:1337");
-    });
+		socket.disconnect();
+		socket = io.connect("{{ Config::get('app.url') }}:1337");
+	});
 
-    socket.on('connect', function () {
+	socket.on('connect', function () {
 
-    	$('#message').attr("disabled", null);
-    	Messenger().hideAll();
-    	Messenger().post({message: 'You\'re connected to chat!', hideAfter: 3});
+		$('#message').attr("disabled", null);
+		Messenger().hideAll();
+		Messenger().post({message: 'You\'re connected to chat!', hideAfter: 3});
 
-        // Subscribe to a chat room
-        socket.emit('subscribe', 
-    	{
-    		'room': '{{ $chatRoom->uniqueId }}',
-    		'userId': '{{ $activeUser->uniqueId }}',
-    		'username': '{{ $activeUser->username }}'
-    	});
+		// Subscribe to a chat room
+		socket.emit('subscribe',
+		{
+			'room': '{{ $chatRoom->uniqueId }}',
+			'userId': '{{ $activeUser->uniqueId }}',
+			'username': '{{ $activeUser->username }}'
+		});
 
-        socket.on('backFillChatLog', function (chatLog) {
-        	$('#chatBox').html(chatLog.join(''));
+		socket.on('backFillChatLog', function (chatLog) {
+			$('#chatBox').html(chatLog.join(''));
 
 			chatScroll();
 
 			checkTimestamps();
-        });
+		});
 
-        // Update the userlist when a user connects or disconnects.
-        socket.on('userListUpdate', function (userList) {
-            $('#usersOnline').html(userList.join('<br />'));
-        });
+		// Update the userlist when a user connects or disconnects.
+		socket.on('userListUpdate', function (userList) {
+			$('#usersOnline').html(userList.join('<br />'));
+		});
 
-        socket.on('message', function (message) {
-            $('#chatBox').append(message);
+		socket.on('message', function (message) {
+			$('#chatBox').append(message);
 
 			chatScroll();
 
@@ -164,33 +164,33 @@
 				duration:0,
 				interval:700
 			});
-        });
+		});
 
-        socket.on('connectionMessage', function (connectionMessageData) {
-    		$('#chatBox').append(connectionMessageData);
+		socket.on('connectionMessage', function (connectionMessageData) {
+			$('#chatBox').append(connectionMessageData);
 
-    		chatScroll();
-        });
+			chatScroll();
+		});
 
-        socket.on('awayListUpdate', function (userList) {
-            $('#usersAway').html(userList.join('<br />'));
-        });        
+		socket.on('awayListUpdate', function (userList) {
+			$('#usersAway').html(userList.join('<br />'));
+		});
 
 		$( document ).on( "idle.idleTimer", function(){
-	        socket.emit('statusUpdate', 
-	    	{
-	    		'status': 'Away'
-	    	});
+			socket.emit('statusUpdate',
+			{
+				'status': 'Away'
+			});
 		});
 
 		$( document ).on( "active.idleTimer", function(){
-	        socket.emit('statusUpdate', 
-	    	{
-	    		'status': ''
-	    	});
+			socket.emit('statusUpdate',
+			{
+				'status': ''
+			});
 		});
 
-    });
+	});
 	jwerty.key('enter', false);
 	jwerty.key('enter', true, '#message');
 	jwerty.key('enter', function () {

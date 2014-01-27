@@ -9,6 +9,25 @@ class User_CharacterController extends BaseController {
 		$this->setViewData('rolls', $rolls);
 	}
 
+	public function getAdd()
+	{
+		LeftTab::
+			addPanel()
+				->setTitle('Character Creation')
+				->addTab('Basics', 'basics', 'basics', array('badge' => '<i class="fa fa-check"></i>'))
+				->addTab('Details', 'details')
+				->addTab('Appearances', 'appearances')
+				->addTab('Stats', 'stats')
+				->addTab('Class', 'class')
+				->addTab('Attributes', 'attributes')
+				->addTab('Secondary Attributes', 'secondary-attributes')
+				->addTab('Skills', 'skills')
+				->addTab('Advantages', 'advantages', 'advantages', array('alertBadge' => '<i class="fa fa-question"></i>'))
+				->addTab('Disadvantages', 'disadvantages')
+			->buildPanel()
+		->make();
+	}
+
 	public function getPaginationCharacters()
 	{
 		$characters = Character::where('user_id', $this->activeUser->id)->orderByNameAsc()->paginate(3);

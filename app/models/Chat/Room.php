@@ -1,6 +1,6 @@
 <?php
 
-class Chat_Room extends Core\Chat_Room
+class Chat_Room extends Syntax\Core\Chat_Room
 {
 	/********************************************************************
 	 * Relationships

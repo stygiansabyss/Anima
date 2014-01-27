@@ -61,13 +61,13 @@ class Game_Master_Rules_CoreController extends Game_Master_RulesController {
 
 			// Handle errors
 			if ($this->errorCount() > 0) {
-				$this->ajaxResponse->addErrors($this->getErrors());
+				Ajax::addErrors($this->getErrors());
 			} else {
-				$this->ajaxResponse->setStatus('success')->addData('resource', $class->toArray());
+				Ajax::setStatus('success')->addData('resource', $class->toArray());
 			}
 
 			// Send the response
-			return $this->ajaxResponse->sendResponse();
+			return Ajax::sendResponse();
 		}
 	}
 
@@ -122,13 +122,13 @@ class Game_Master_Rules_CoreController extends Game_Master_RulesController {
 
 			// Handle errors
 			if ($this->errorCount() > 0) {
-				$this->ajaxResponse->addErrors($this->getErrors());
+				Ajax::addErrors($this->getErrors());
 			} else {
-				$this->ajaxResponse->setStatus('success')->addData('resource', $appearance->toArray());
+				Ajax::setStatus('success')->addData('resource', $appearance->toArray());
 			}
 
 			// Send the response
-			return $this->ajaxResponse->sendResponse();
+			return Ajax::sendResponse();
 		}
 	}
 
@@ -183,13 +183,13 @@ class Game_Master_Rules_CoreController extends Game_Master_RulesController {
 
 			// Handle errors
 			if ($this->errorCount() > 0) {
-				$this->ajaxResponse->addErrors($this->getErrors());
+				Ajax::addErrors($this->getErrors());
 			} else {
-				$this->ajaxResponse->setStatus('success')->addData('resource', $stat->toArray());
+				Ajax::setStatus('success')->addData('resource', $stat->toArray());
 			}
 
 			// Send the response
-			return $this->ajaxResponse->sendResponse();
+			return Ajax::sendResponse();
 		}
 	}
 
@@ -252,13 +252,13 @@ class Game_Master_Rules_CoreController extends Game_Master_RulesController {
 
 			// Handle errors
 			if ($this->errorCount() > 0) {
-				$this->ajaxResponse->addErrors($this->getErrors());
+				Ajax::addErrors($this->getErrors());
 			} else {
-				$this->ajaxResponse->setStatus('success')->addData('resource', $trait->toArray());
+				Ajax::setStatus('success')->addData('resource', $trait->toArray());
 			}
 
 			// Send the response
-			return $this->ajaxResponse->sendResponse();
+			return Ajax::sendResponse();
 		}
 	}
 
@@ -313,13 +313,13 @@ class Game_Master_Rules_CoreController extends Game_Master_RulesController {
 
 			// Handle errors
 			if ($this->errorCount() > 0) {
-				$this->ajaxResponse->addErrors($this->getErrors());
+				Ajax::addErrors($this->getErrors());
 			} else {
-				$this->ajaxResponse->setStatus('success')->addData('resource', $attribute->toArray());
+				Ajax::setStatus('success')->addData('resource', $attribute->toArray());
 			}
 
 			// Send the response
-			return $this->ajaxResponse->sendResponse();
+			return Ajax::sendResponse();
 		}
 	}
 
@@ -380,13 +380,13 @@ class Game_Master_Rules_CoreController extends Game_Master_RulesController {
 
 			// Handle errors
 			if ($this->errorCount() > 0) {
-				$this->ajaxResponse->addErrors($this->getErrors());
+				Ajax::addErrors($this->getErrors());
 			} else {
-				$this->ajaxResponse->setStatus('success')->addData('resource', $secondaryAttribute->toArray());
+				Ajax::setStatus('success')->addData('resource', $secondaryAttribute->toArray());
 			}
 
 			// Send the response
-			return $this->ajaxResponse->sendResponse();
+			return Ajax::sendResponse();
 		}
 	}
 
@@ -447,13 +447,13 @@ class Game_Master_Rules_CoreController extends Game_Master_RulesController {
 
 			// Handle errors
 			if ($this->errorCount() > 0) {
-				$this->ajaxResponse->addErrors($this->getErrors());
+				Ajax::addErrors($this->getErrors());
 			} else {
-				$this->ajaxResponse->setStatus('success')->addData('resource', $skill->toArray());
+				Ajax::setStatus('success')->addData('resource', $skill->toArray());
 			}
 
 			// Send the response
-			return $this->ajaxResponse->sendResponse();
+			return Ajax::sendResponse();
 		}
 	}
 
@@ -511,13 +511,13 @@ class Game_Master_Rules_CoreController extends Game_Master_RulesController {
 
 			// Handle errors
 			if ($this->errorCount() > 0) {
-				$this->ajaxResponse->addErrors($this->getErrors());
+				Ajax::addErrors($this->getErrors());
 			} else {
-				$this->ajaxResponse->setStatus('success')->addData('resource', $magicType->toArray());
+				Ajax::setStatus('success')->addData('resource', $magicType->toArray());
 			}
 
 			// Send the response
-			return $this->ajaxResponse->sendResponse();
+			return Ajax::sendResponse();
 		}
 	}
 

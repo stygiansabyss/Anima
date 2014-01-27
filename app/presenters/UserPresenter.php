@@ -1,6 +1,6 @@
 <?php
 
-class UserPresenter extends Core\UserPresenter {
+class UserPresenter extends Syntax\Core\UserPresenter {
 
 	public function getGameCharacters($gameId)
 	{

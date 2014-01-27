@@ -1,6 +1,6 @@
 <?php
 
-class Chat extends Core\Chat
+class Chat extends Syntax\Core\Chat
 {
 	/********************************************************************
 	 * Relationships

@@ -1,6 +1,6 @@
 <?php
 
-class CharacterPresenter extends Core\CorePresenter {
+class CharacterPresenter extends Syntax\Core\CorePresenter {
 
 	public function className()
 	{

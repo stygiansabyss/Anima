@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'paths' => array(__DIR__.'/../views', __DIR__.'/../core/views'),
+	'paths' => array(__DIR__.'/../views', base_path() .'/workbench/syntax/core/src/views'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -26,6 +26,6 @@ return array(
 	|
 	*/
 
-	'pagination' => 'core.helpers.slider-mini',
+	'pagination' => 'core::helpers.slider-mini',
 
 );
