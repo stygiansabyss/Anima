@@ -44,6 +44,7 @@ class AdminController extends Core_AdminController {
                 ->addTab('Message',         'message')
                 ->addTab('Forum Category',  'forum-category')
                 ->addTab('Forum Board',     'forum-board')
+                ->addTab('Forum Post',      'forum-post')
                 ->addTab('Forum Reply',     'forum-reply')
                 ->addTab('Status',          'status')
                 ->buildPanel()

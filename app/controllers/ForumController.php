@@ -10,8 +10,8 @@ class ForumController extends Core_ForumController {
 			'Forum_Reply' => 'Reply'
 		];
 
-		$users = User::orderByNameAsc()->get();
-		$users = $this->arrayToSelect($users, 'id', 'username', 'Select a user');
+		$users    = User::orderByNameAsc()->get()->toSelectArray('Select a user', 'id', 'username');
+		$statuses = Forum_Support_Status::all()->toSelectArray('Select a status');
 
 		$characters = Character::orderByNameAsc()->get();
 		$enemies    = Enemy::orderByNameAsc()->get();
@@ -23,6 +23,7 @@ class ForumController extends Core_ForumController {
 
 		$this->setViewData('typesArray', $typesArray);
 		$this->setViewData('users', $users);
+		$this->setViewData('statuses', $statuses);
 		$this->setViewData('characters', $characters);
 	}
 
@@ -38,8 +39,8 @@ class ForumController extends Core_ForumController {
 			'Forum_Reply' => 'Reply'
 		];
 
-		$users = User::orderByNameAsc()->get();
-		$users = $this->arrayToSelect($users, 'id', 'username', 'Select a user');
+		$users    = User::orderByNameAsc()->get()->toSelectArray('Select a user', 'id', 'username');
+		$statuses = Forum_Support_Status::all()->toSelectArray('Select a status');
 
 		$characters = Character::orderByNameAsc()->get();
 		$enemies    = Enemy::orderByNameAsc()->get();
@@ -51,6 +52,7 @@ class ForumController extends Core_ForumController {
 
 		$this->setViewData('typesArray', $typesArray);
 		$this->setViewData('users', $users);
+		$this->setViewData('statuses', $statuses);
 		$this->setViewData('characters', $characters);
 		$this->setViewData('posts', $posts);
 	}
@@ -61,6 +63,7 @@ class ForumController extends Core_ForumController {
 		$type       = Input::get('type');
 		$user       = Input::get('user');
 		$character  = Input::get('character');
+		$status     = Input::get('status');
 
 		$posts   = Forum_View::orderBy('lastModified', 'desc');
 
@@ -70,6 +73,11 @@ class ForumController extends Core_ForumController {
 
 		if ($character != '0') {
 			$posts->where('morph_id', $character);
+		}
+
+		if ($status != '0' && $type != 'Forum_Reply') {
+			$posts->status($status);
+			$type = 'Forum_Post';
 		}
 
 		if ($type != 'all') {
