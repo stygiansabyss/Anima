@@ -60,6 +60,9 @@ class Helper_Forum extends Helper_Message {
 					$newObject->oldId               = $object->id;
 
 					$newObject->save();
+				} else {
+					$existingBoard->parent_id = $object->parent_id;
+					$existingBoard->save();
 				}
 			}
 
@@ -67,12 +70,15 @@ class Helper_Forum extends Helper_Message {
 			$boards = Forum_Board::all();
 
 			foreach ($boards as $board) {
-				if ($board->parent_id == '0') {
-					$board->parent_id = null;
-				} else {
-					$board->parent_id = $this->getIdForOldId('Forum_Board', $board->parent_id);
-				}
+				$board->parent_id = $this->getIdForOldId('Forum_Board', $board->parent_id);
 				$board->save();
+			}
+
+			foreach ($boards as $board) {
+				if (is_int($board->parent_id)) {
+					$board->parent_id = null;
+					$board->save();
+				}
 			}
 			$this->info('Boards moved');
 		} else {

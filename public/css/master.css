@@ -7681,7 +7681,6 @@ input[type="color"]:focus,
 div.labels {
   margin-left: 25px;
   display: block;
-  border-bottom: 1px solid #4d5252;
 }
 div.labels div {
   display: block;

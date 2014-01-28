@@ -26,8 +26,8 @@ class MenuController extends Core_BaseController
 				// Forum Administration
 				if ($this->hasPermission('FORUM_ADMIN')) {
 					Menu::addMenuChild($forumTitle, 'Admin Panel', 'forum/admin/dashboard')
-						->addChildChild('Forums', 'Admin Panel', 'Add Category', 'forum/category/add')
-						->addChildChild('Forums', 'Admin Panel', 'Add Board', 'forum/board/add');
+						->addChildChild($forumTitle, 'Admin Panel', 'Add Category', 'forum/category/add')
+						->addChildChild($forumTitle, 'Admin Panel', 'Add Board', 'forum/board/add');
 				}
 			}
 
