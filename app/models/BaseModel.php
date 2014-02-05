@@ -21,20 +21,22 @@ class BaseModel extends Core_BaseModel {
 
 		$matchedStatus = 0;
 
-		$characterStatuses = $this->status->status->keyName->toArray();
+		if ($this->status && $this->status->count() > 0) {
+			$characterStatuses = $this->status->status->keyName->toArray();
 
-		foreach ($statuses as $status) {
-			if (in_array($status, $characterStatuses)) {
-				if (!$matchAll) {
-					return true;
+			foreach ($statuses as $status) {
+				if (in_array($status, $characterStatuses)) {
+					if (!$matchAll) {
+						return true;
+					}
+
+					$matchedStatus++;
 				}
-
-				$matchedStatus++;
 			}
-		}
 
-		if ($matchedStatus) {
-			if (count($statuses) == $matchedStatus) return true;
+			if ($matchedStatus) {
+				if (count($statuses) == $matchedStatus) return true;
+			}
 		}
 
 		return false;

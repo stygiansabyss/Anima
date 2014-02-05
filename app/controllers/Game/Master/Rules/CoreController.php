@@ -19,6 +19,7 @@ class Game_Master_Rules_CoreController extends Game_Master_RulesController {
 				->addTab('Skills', 'skills')
 				->addTab('Magic Types', 'magic-types')
 				->buildPanel()
+		->setGlow(true)
 		->make();
 	}
 
@@ -147,7 +148,6 @@ class Game_Master_Rules_CoreController extends Game_Master_RulesController {
 		$stats  = Stat::orderByNameAsc()->paginate(20);
 
 		// Set up the one page crud
-		
 		Crud::setTitle('Base Stats')
 				 ->setSortProperty('name')
 				 ->setDeleteLink('/game/master/rules/core/basestatdelete/')
@@ -156,11 +156,13 @@ class Game_Master_Rules_CoreController extends Game_Master_RulesController {
 				 ->setResources($stats);
 
 		// Add the display columns
-		Crud::addDisplayField('name');
+		Crud::addDisplayField('name')
+			->addDisplayField('creature_only');
 
 		// Add the form fields
 		Crud::addFormField('name', 'text')
-				 ->addFormField('description', 'textarea');
+				 ->addFormField('description', 'textarea')
+				 ->addFormField('creatureFlag', 'select', array('Open to all', 'Creatures only'));
 
 		Crud::make();
 		
@@ -177,6 +179,7 @@ class Game_Master_Rules_CoreController extends Game_Master_RulesController {
 			$stat                = (isset($input['id']) && $input['id'] != null ? Stat::find($input['id']) : new Stat);
 			$stat->name          = $input['name'];
 			$stat->description   = $input['description'];
+			$stat->creatureFlag  = $input['creatureFlag'];
 
 			// Attempt to save the object
 			$this->save($stat);

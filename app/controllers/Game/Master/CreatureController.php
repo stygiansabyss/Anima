@@ -1,8 +1,8 @@
 <?php
 
-class Game_Master_EnemyController extends Game_Master_CharacterController {
+class Game_Master_CreatureController extends Game_Master_CharacterController {
 
-	public $type = 'Enemy';
+	public $type = 'Creature';
 
 	protected function getObjects($gameId, $characterId)
 	{
@@ -10,15 +10,15 @@ class Game_Master_EnemyController extends Game_Master_CharacterController {
 		$this->game   = Game::find($gameId);
 
 		$this->characterId = $characterId;
-		$this->character   = Enemy::find($characterId);
+		$this->character   = Creature::find($characterId);
 	}
 
 	public function getCreate($gameId)
 	{
 		LeftTab::
 			addPanel()
-				->setTitle('Enemy Creation')
-				->setBasePath('game/master/enemy')
+				->setTitle('Creature Creation')
+				->setBasePath('game/master/creature')
 				->addTab('Start', "start/{$gameId}")
 			->buildPanel()
 		->setGlow(true)
@@ -29,8 +29,8 @@ class Game_Master_EnemyController extends Game_Master_CharacterController {
 	{
 		LeftTab::
 			addPanel()
-				->setTitle('Enemy Update')
-				->setBasePath('game/master/enemy')
+				->setTitle('Creature Update')
+				->setBasePath('game/master/creature')
 				->addTab('Basics', "basics/{$gameId}/{$characterId}")
 				->addTab('Statuses', "statuses/{$gameId}/{$characterId}")
 				->addTab('Details', "details/{$gameId}/{$characterId}")
@@ -52,7 +52,7 @@ class Game_Master_EnemyController extends Game_Master_CharacterController {
 		$input = Input::all();
 
 		if ($input != null) {
-			$character            = new Enemy;
+			$character            = new Creature;
 			$character->name      = $input['name'];
 			$character->user_id   = $input['user_id'] != '0' ? $input['user_id'] : null;
 			$character->parent_id = $input['parent_id'] != '0' ? $input['parent_id'] : null;
@@ -73,55 +73,21 @@ class Game_Master_EnemyController extends Game_Master_CharacterController {
 
 			$this->save($characterStatus);
 
-			return $this->redirect('/game/master/enemy/update/'. $gameId .'/'. $character->id, 'Enemy created.');
+			return $this->redirect('/game/master/creature/update/'. $gameId .'/'. $character->id, 'Creature created.');
 		}
 
-		return $this->redirect('/game/master/enemy/create/'. $gameId);
+		return $this->redirect('/game/master/creature/create/'. $gameId);
 	}
 
-	public function getBasics($gameId, $characterId)
+	public function getStats($gameId, $characterId)
 	{
 		$this->getObjects($gameId, $characterId);
 
-		$users = User::orderByNameAsc()->get()->filter(function ($user) {
-			if ($user->can('PLAY_GAMES')) return true;
-		})->toSelectArray('Select a user', 'id', 'username');
+		$stats = Stat::orderByNameAsc()->get();
 
-		$characters = Game::find($gameId)->characters->filter(function ($character) use ($characterId) {
-			if ($character->morph_id != $characterId && $character->morph_type == $this->type) return true;
-		})->morph->toSelectArray('Select a parent');
-
-		$this->setViewPath('game.master.enemy.basics');
+		$this->setViewPath('game.master.character.stats');
 		$this->setViewData('character', $this->character);
-		$this->setViewData('users', $users);
-		$this->setViewData('characters', $characters);
+		$this->setViewData('stats', $stats);
 		$this->setViewData('type', $this->type);
-	}
-
-	public function postBasics($gameId, $characterId)
-	{
-		$this->getObjects($gameId, $characterId);
-
-		$input = e_array(Input::all());
-
-		if ($input != null) {
-			$this->character->name      = $input['name'];
-			$this->character->user_id   = $input['user_id'] != '0' ? $input['user_id'] : null;
-			$this->character->parent_id = $input['parent_id'] != '0' ? $input['parent_id'] : null;
-			$this->character->noExpFlag = Input::has('noExpFlag') ? 1 : 0;
-			$this->character->color     = $input['color'];
-
-			$this->checkErrorsSave($this->character);
-
-			// Handle errors
-			if ($this->errorCount() > 0) {
-				Ajax::addErrors($this->getErrors());
-			} else {
-				Ajax::setStatus('success');
-			}
-
-			// Send the response
-			return Ajax::sendResponse();
-		}
 	}
 }

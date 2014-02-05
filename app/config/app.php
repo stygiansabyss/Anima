@@ -137,6 +137,7 @@ return array(
 		'Syntax\Core\Utility\UtilityServiceProvider',
 		'Syntax\Core\Utility\AliasServiceProvider',
 		'Library\ParseChatServiceProvider',
+		'Orangehill\Iseed\IseedServiceProvider'
 
 	),
 

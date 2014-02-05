@@ -45,4 +45,30 @@ class HomeController extends Core_HomeController {
         $this->setViewData('admins', $admins);
         $this->setViewData('gameMasters', $gameMasters);
     }
+
+    public function getDbSeeder()
+    {
+        $this->skipView();
+
+        $databaseName = Config::get('database.connections')[Config::get('database.default')]['database'];
+
+        $tables = new Utility_Collection(
+            DB::select(
+                DB::raw('
+                    SELECT table_name, engine
+                    FROM information_schema.tables
+                    WHERE table_type = \'BASE TABLE\'
+                        AND table_schema=\''. $databaseName .'\'
+                    ORDER BY table_name ASC'
+                )
+            )
+        );
+        $tables = $tables->table_name;
+
+        foreach ($tables as $table) {
+            ppd($table);
+        }
+
+        ppd($tables);
+    }
 }

@@ -48,6 +48,10 @@ class Stat extends BaseModel {
 	/********************************************************************
 	 * Getter and Setter methods
 	 *******************************************************************/
+	public function getCreatureOnlyAttribute()
+	{
+		return $this->creatureFlag == 1 ? 'Creature Only' : null;
+	}
 
 	/********************************************************************
 	 * Extra Methods

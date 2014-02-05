@@ -1,5 +1,5 @@
 @include('character.components.breadcrumbs')
-{{ Form::ajaxForm('submitForm', 'New spell submitted for approval.')->open() }}
+{{ bForm::ajaxForm('submitForm', 'New spell submitted for approval.')->open() }}
 	<div class="row">
 		<div class="col-md-offset-3 col-md-6">
 			<div class="panel panel-default">

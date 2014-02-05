@@ -56,6 +56,7 @@ class Game extends BaseModel {
 	public function getPlayerCharactersAttribute()
 	{
 		$characters = $this->characters->filter(function ($character) {
+			if (!$character->morph->checkStatus('APPROVED')) return false;
 			if ($character->morph->checkStatus(array('DEAD', 'INACTIVE', 'NPC'))) return false;
 			if ($character->morph_type == 'Character') return true;
 		})->morph->sortBy(function ($character) {
@@ -79,8 +80,22 @@ class Game extends BaseModel {
 	public function getCreaturesAttribute()
 	{
 		$characters = $this->characters->filter(function ($character) {
-			if ($character->morph->checkStatus(array('DEAD', 'INACTIVE'))) return false;
+			if (!$character->morph->checkStatus('APPROVED')) return false;
+			if ($character->morph->checkStatus(array('DEAD', 'INACTIVE', 'NPC'))) return false;
 			if ($character->morph_type == 'Creature') return true;
+		})->morph->sortBy(function ($character) {
+			return $character->name;
+		});
+
+		return $characters;
+	}
+
+	public function getEnemiesAttribute()
+	{
+		$characters = $this->characters->filter(function ($character) {
+			if (!$character->morph->checkStatus('APPROVED')) return false;
+			if ($character->morph->checkStatus(array('DEAD', 'INACTIVE', 'NPC'))) return false;
+			if ($character->morph_type == 'Enemy') return true;
 		})->morph->sortBy(function ($character) {
 			return $character->name;
 		});
@@ -91,9 +106,9 @@ class Game extends BaseModel {
 	public function getNpcsAttribute()
 	{
 		$characters = $this->characters->filter(function ($character) {
+			if (!$character->morph->checkStatus('APPROVED')) return false;
 			if ($character->morph->checkStatus(array('DEAD', 'INACTIVE'))) return false;
 			if ($character->morph->checkStatus(array('NPC'))) return true;
-			if ($character->morph_type == 'Enemy') return true;
 		})->morph->sortBy(function ($character) {
 			return $character->name;
 		});
@@ -190,6 +205,46 @@ class Game extends BaseModel {
 			});
 
 			return $unapprovedSpells;
+		}
+		return array();
+	}
+
+	/**
+	 * Get all unapproved characters
+	 *
+	 * @return array
+	 */
+	public function getUnApprovedCharactersAttribute()
+	{
+		// Get all characters
+		$characters = $this->characters->morph;
+
+		if (count($characters) > 0) {
+			$unapprovedCharacters = $characters->filter(function ($character) {
+				if (!$character->checkStatus('APPROVED')) return true;
+			});
+
+			return $unapprovedCharacters;
+		}
+		return array();
+	}
+
+	/**
+	 * Get all in progress characters
+	 *
+	 * @return array
+	 */
+	public function getInProgressCharactersAttribute()
+	{
+		// Get all characters
+		$characters = $this->characters->morph;
+
+		if (count($characters) > 0) {
+			$unapprovedCharacters = $characters->filter(function ($character) {
+				if ($character->checkStatus('IN_PROGRESS')) return true;
+			});
+
+			return $unapprovedCharacters;
 		}
 		return array();
 	}

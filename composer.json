@@ -5,7 +5,8 @@
 	"license": "MIT",
 	"require": {
 		"laravel/framework": "4.1.*",
-		"syntax/core": "dev-master"
+		"syntax/core": "dev-master",
+		"orangehill/iseed": "dev-master"
 	},
 	"autoload": {
 		"classmap": [

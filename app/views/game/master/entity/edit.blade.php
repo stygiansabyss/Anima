@@ -9,7 +9,7 @@
 					{{ bForm::textarea('description', $entity->description, array('placeholder' => 'Description'), 'Description') }}
 					{{ bForm::checkbox('hiddenFlag', 1, $entity->hiddenFlag, array(), 'Hidden') }}
 					{{ bForm::checkbox('activeFlag', 1, $entity->activeFlag, array(), 'Active') }}
-					{{ bForm::image('avatar', $entity->avatar, 'Avatar') }}
+					{{ bForm::image('avatar', $entity->avatarPath, 'Avatar') }}
 					{{ bForm::submit('Update Entity') }}
 				</div>
 			</div>

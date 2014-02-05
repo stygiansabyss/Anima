@@ -6,7 +6,10 @@ class User_CharacterController extends BaseController {
 	{
 		$rolls = $this->activeUser->rolls;
 
+		$characters = Character::where('user_id', $this->activeUser->id)->orderByNameAsc()->paginate(5);
+
 		$this->setViewData('rolls', $rolls);
+		$this->setViewData('characters', $characters);
 	}
 
 	public function getAdd()
@@ -171,4 +174,70 @@ class User_CharacterController extends BaseController {
 		return $this->redirect('back', 'Character deleted.');
 	}
 
+	public function getEdit($characterId)
+	{
+		$character = Character::find($characterId);
+		$appearances = Appearance::orderByNameAsc()->get();
+
+		$this->setViewData('character', $character);
+		$this->setViewData('appearances', $appearances);
+	}
+
+	public function postEdit($characterId)
+	{
+		$this->skipView();
+
+		$input = e_array(Input::all());
+
+		if ($input != null) {
+			$character = Character::find($characterId);
+
+			// Handle the avatar
+			if (Input::hasFile('avatar')) {
+				CoreImage::addImage(public_path() .'/img/avatars/Character/', Input::file('avatar'), Str::studly($character->name));
+			}
+
+			// Handle the base character changes
+			$character->color = $input['color'];
+			$this->save($character);
+
+			// Handle the details
+			$characterDetails               = Character_Detail::where('morph_id', $characterId)->where('morph_type', 'Character')->first();
+			$characterDetails->gold         = $input['gold'];
+			$characterDetails->silver       = $input['silver'];
+			$characterDetails->copper       = $input['copper'];
+			$characterDetails->armorWeapons = $input['armorWeapons'];
+			$characterDetails->generalItems = $input['generalItems'];
+
+			$this->save($characterDetails);
+
+			// Handle the appearances
+			$ageId       = Appearance::whereName('Age')->first()->id;
+			$genderId    = Appearance::whereName('Gender')->first()->id;
+			$hairId      = Appearance::whereName('Hair')->first()->id;
+			$eyesId      = Appearance::whereName('Eyes')->first()->id;
+			$backstoryId = Appearance::whereName('Backstory')->first()->id;
+
+			$this->updateAppearance($characterId, $ageId, $input['age']);
+			$this->updateAppearance($characterId, $genderId, $input['gender']);
+			$this->updateAppearance($characterId, $hairId, $input['hair']);
+			$this->updateAppearance($characterId, $eyesId, $input['eyes']);
+			$this->updateAppearance($characterId, $backstoryId, $input['backstory']);
+
+			// Handle errors
+			if ($this->errorCount() > 0) {
+				return $this->redirect();
+			}
+
+			return $this->redirect('/user/characters', 'Character updated');
+		}
+	}
+
+	protected function updateAppearance($characterId, $appearanceId, $value)
+	{
+		$appearance        = Character_Appearance::where('morph_id', $characterId)->where('morph_type', 'Character')->where('appearance_id', $appearanceId)->first();
+		$appearance->value = $value;
+
+		$this->save($appearance);
+	}
 }

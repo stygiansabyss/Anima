@@ -49,6 +49,7 @@ class AdminController extends Core_AdminController {
                 ->addTab('Status',          'status')
                 ->buildPanel()
             ->setCollapsable(true)
+            ->setGlow(true)
         ->make();
     }
 

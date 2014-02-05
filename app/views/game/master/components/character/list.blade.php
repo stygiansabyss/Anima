@@ -1,21 +1,19 @@
-<div class="well">
-	<div class="well-title">
-		<a class="accordion-toggle" data-toggle="collapse" href="#collapse{{ Str::studly($title) }}" style="color: #000;" onClick="$(this).children().toggleClass('fa fa-chevron-down').toggleClass('fa fa-chevron-up');">
-			{{ $title }} ({{ $characters->count() }}) <i class="fa fa-chevron-down"></i>
-		</a>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		{{ $title }}
 		@if ($type != 'inactive')
-			<div class="well-btn well-btn-right">
+			<div class="panel-btn">
 				{{ HTML::linkIcon('/game/master/'. $type .'/create/'. $game->id, 'fa fa-plus') }}
 			</div>
 		@endif
 	</div>
-	<div id="collapse{{ Str::studly($title) }}" class="accordion-body collapse">
+	<div>
 		@if ($type == 'entity')
-			<table class="table table-hover table-striped table-condensed text-center">
+			<table class="table table-hover table-striped table-condensed">
 				<thead>
 					<tr>
-						<th class="text-center">Name</th>
-						<th class="text-center">Hidden</th>
+						<th>Name</th>
+						<th>Hidden</th>
 						<th class="text-right">Actions</th>
 					</tr>
 				</thead>
@@ -39,13 +37,19 @@
 				</tbody>
 			</table>
 		@else
-			<table class="table table-hover table-striped table-condensed text-center">
+			<table class="table table-hover table-striped table-condensed">
 				<thead>
 					<tr>
-						<th class="text-center">Name</th>
-						<th class="text-center">Class</th>
-						<th class="text-center">EXP</th>
-						<th class="text-center">User</th>
+						<th>Name</th>
+						@if ($type == 'inactive')
+							<th>Statuses</th>
+						@endif
+						<th>Class</th>
+						@if ($type == 'npc' || $type == 'inactive')
+							<th>Type</th>
+						@endif
+						<th>EXP</th>
+						<th>User</th>
 						<th class="text-right">Actions</th>
 					</tr>
 				</thead>
@@ -54,18 +58,32 @@
 						<tr>
 							<td>
 								{{ HTML::link('character/sheet/'. $character->id, $character->name, array('target' => '_blank')) }}
-								@if ($character->details->hitPoints == 0)
+								@if ($character->details && $character->details->hitPoints == 0)
 									<small class="text-error">(Deceased)</small>
+								@elseif ($character->checkStatus('IN_PROGRESS'))
+									<small class="text-info">(In Progress)</small>
 								@endif
 							</td>
+							@if ($type == 'inactive')
+								<td>
+									<small>
+										@foreach ($character->status->status as $status)
+											<span class="label label-enhancement">{{ $status->name }}</span>
+										@endforeach
+									</small>
+								</td>
+							@endif
 							<td>
 								{{ $character->className }}
-								@if ($character->details->level != 0)
+								@if ($character->details && $character->details->level != 0)
 									({{ $character->details->level }})
 								@endif
 							</td>
+							@if ($type == 'npc' || $type == 'inactive')
+								<td>{{ getRootClass($character) }}</td>
+							@endif
 							<td>
-								@if (!isset($character->noExpFlag) || $character->noExpFlag == 0)
+								@if ($character->details && (!isset($character->noExpFlag) || $character->noExpFlag == 0))
 									{{ $character->details->experience }}
 								@endif
 							</td>

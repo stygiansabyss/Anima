@@ -43,22 +43,28 @@
 						Currency <i class="fa fa-chevron-down"></i>
 					</a>
 				</div>
-				<table id="currency" class="table table-condensed table-hover accordion-body collapse">
-					<tbody>
-						<tr>
-							<td>Gold</td>
-							<td>{{ $character->details->gold }}</td>
-						</tr>
-						<tr>
-							<td>Silver</td>
-							<td>{{ $character->details->silver }}</td>
-						</tr>
-						<tr>
-							<td>Copper</td>
-							<td>{{ $character->details->copper }}</td>
-						</tr>
-					</tbody>
-				</table>
+				<div class="list-glow accordion-body collapse" id="currency">
+					<ul class="list-glow-group no-header">
+						<li>
+							<div class="list-glow-group-item list-glow-group-item-sm">
+								<div class="col-md-6">Gold</div>
+								<div class="col-md-6">{{ $character->details->gold }}</div>
+							</div>
+						</li>
+						<li>
+							<div class="list-glow-group-item list-glow-group-item-sm">
+								<div class="col-md-6">Silver</div>
+								<div class="col-md-6">{{ $character->details->silver }}</div>
+							</div>
+						</li>
+						<li>
+							<div class="list-glow-group-item list-glow-group-item-sm">
+								<div class="col-md-6">Copper</div>
+								<div class="col-md-6">{{ $character->details->copper }}</div>
+							</div>
+						</li>
+					</ul>
+				</div>
 			</div>
 			<div class="panel panel-default">
 				<div class="panel-heading">
@@ -66,15 +72,25 @@
 						Inventory <i class="fa fa-chevron-down"></i>
 					</a>
 				</div>
-				<div class="list-group accordion-body collapse" id="inventory">
-					<div class="list-group-item">
-						<h5 class="list-group-item-heading">Armor & Weapons</h5>
-						<div class="list-group-item-text">{{ $character->details->armorWeapons }}</div>
-					</div>
-					<div class="list-group-item">
-						<h5 class="list-group-item-heading">general Items</h5>
-						<div class="list-group-item-text">{{ $character->details->generalItems }}</div>
-					</div>
+				<div class="list-glow accordion-body collapse" id="inventory">
+					<ul class="list-glow-group no-header">
+						<li>
+							<div class="list-glow-group-item list-glow-group-item-sm">
+								<div class="col-md-12 text-primary"><strong>Armor & Weapons</strong></div>
+							</div>
+							<div class="list-glow-group-item list-glow-group-item-sm" style="border-top: none;">
+								<div class="col-md-12">{{ $character->details->armorWeapons }}</div>
+							</div>
+						</li>
+						<li>
+							<div class="list-glow-group-item list-glow-group-item-sm">
+								<div class="col-md-12 text-primary"><strong>General Items</strong></div>
+							</div>
+							<div class="list-glow-group-item list-glow-group-item-sm" style="border-top: none;">
+								<div class="col-md-12">{{ $character->details->generalItems }}</div>
+							</div>
+						</li>
+					</ul>
 				</div>
 			</div>
 		@endif
@@ -83,15 +99,23 @@
 		@if (count($character->appearances) > 0)
 			<div class="panel panel-default">
 				<div class="panel-heading">Description</div>
-				<div class="list-group">
-					@foreach ($character->appearances as $appearance)
-						@if (!is_null($appearance->value))
-							<div class="list-group-item">
-								<h5 class="list-group-item-heading">{{ $appearance->appearance->name }}</h5>
-								<div class="list-group-item-text">{{ nl2br($appearance->value) }}</div>
-							</div>
-						@endif
-					@endforeach
+				<div class="list-glow" id="inventory">
+					<ul class="list-glow-group no-header">
+						@foreach ($character->appearances as $appearance)
+							@if (!is_null($appearance->value))
+								<li>
+									<div class="list-glow-group-item list-glow-group-item-sm">
+										<div class="col-md-12 text-primary">
+											<strong>{{ $appearance->appearance->name }}</strong>
+										</div>
+									</div>
+									<div class="list-glow-group-item list-glow-group-item-sm" style="border-top: none;">
+										<div class="col-md-12">{{ nl2br($appearance->value) }}</div>
+									</div>
+								</li>
+							@endif
+						@endforeach
+					</ul>
 				</div>
 			</div>
 		@endif
@@ -106,36 +130,42 @@
 								Base Stats <i class="fa fa-chevron-down"></i>
 							</a>
 						</div>
-						<table id="baseStats" class="table table-condensed table-striped table-hover accordion-body collapse">
-							<thead>
-								<tr>
-									<th>Stat</th>
-									<th>Value</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>Level</td>
-									<td class="text-center">{{ $character->details->level }}</td>
-								</tr>
-								<tr>
-									<td>LP</td>
-									<td class="text-center">{{ $character->details->hitPoints }}</td>
-								</tr>
-								<tr>
-									<td>Zeon</td>
-									<td class="text-center">{{ $character->details->magicPoints }}</td>
-								</tr>
+						<div class="list-glow accordion-body collapse" id="baseStats">
+							<div class="list-glow-labels">
+								<div class="col-md-6">Stat</div>
+								<div class="col-md-6">Value</div>
+							</div>
+							<ul class="list-glow-group">
+								<li>
+									<div class="list-glow-group-item list-glow-group-item-sm">
+										<div class="col-md-6">Level</div>
+										<div class="col-md-6">{{ $character->details->level }}</div>
+									</div>
+								</li>
+								<li>
+									<div class="list-glow-group-item list-glow-group-item-sm">
+										<div class="col-md-6">LP</div>
+										<div class="col-md-6">{{ $character->details->hitPoints }}</div>
+									</div>
+								</li>
+								<li>
+									<div class="list-glow-group-item list-glow-group-item-sm">
+										<div class="col-md-6">Zeon</div>
+										<div class="col-md-6">{{ $character->details->magicPoints }}</div>
+									</div>
+								</li>
 								@foreach ($character->stats as $stat)
 									@if (!is_null($stat->value))
-										<tr>
-											<td>{{ $stat->stat->name }}</td>
-											<td class="text-center">{{ $stat->value }}</td>
-										</tr>
+										<li>
+											<div class="list-glow-group-item list-glow-group-item-sm">
+												<div class="col-md-6">{{ $stat->stat->name }}</div>
+												<div class="col-md-6">{{ $stat->value }}</div>
+											</div>
+										</li>
 									@endif
 								@endforeach
-							</tbody>
-						</table>
+							</ul>
+						</div>
 					</div>
 				@endif
 				@if (count($character->attributes) > 0)
@@ -145,24 +175,24 @@
 								Attributes <i class="fa fa-chevron-down"></i>
 							</a>
 						</div>
-						<table id="attributes" class="table table-condensed table-striped table-hover accordion-body collapse">
-							<thead>
-								<tr>
-									<th>Attribute</th>
-									<th>Value</th>
-								</tr>
-							</thead>
-							<tbody>
+						<div class="list-glow accordion-body collapse" id="attributes">
+							<div class="list-glow-labels">
+								<div class="col-md-6">Attribute</div>
+								<div class="col-md-6">Value</div>
+							</div>
+							<ul class="list-glow-group">
 								@foreach ($character->attributes as $attribute)
 									@if (!is_null($attribute->value))
-										<tr>
-											<td>{{ $attribute->attribute->name }}</td>
-											<td class="text-center">{{ $attribute->value }}</td>
-										</tr>
+										<li>
+											<div class="list-glow-group-item list-glow-group-item-sm">
+												<div class="col-md-6">{{ $attribute->attribute->name }}</div>
+												<div class="col-md-6">{{ $attribute->value }}</div>
+											</div>
+										</li>
 									@endif
 								@endforeach
-							</tbody>
-						</table>
+							</ul>
+						</div>
 					</div>
 				@endif
 				@if (count($character->secondaryAttributes) > 0)
@@ -172,24 +202,24 @@
 								Secondary Attributes <i class="fa fa-chevron-down"></i>
 							</a>
 						</div>
-						<table id="secondaryAttributes" class="table table-condensed table-striped table-hover accordion-body collapse">
-							<thead>
-								<tr>
-									<th>Attribute</th>
-									<th>Value</th>
-								</tr>
-							</thead>
-							<tbody>
+						<div class="list-glow accordion-body collapse" id="secondaryAttributes">
+							<div class="list-glow-labels">
+								<div class="col-md-6">Attribute</div>
+								<div class="col-md-6">Value</div>
+							</div>
+							<ul class="list-glow-group">
 								@foreach ($character->secondaryAttributes as $attribute)
 									@if (!is_null($attribute->value))
-										<tr>
-											<td>{{ $attribute->attribute->name }}</td>
-											<td class="text-center">{{ $attribute->value }}</td>
-										</tr>
+										<li>
+											<div class="list-glow-group-item list-glow-group-item-sm">
+												<div class="col-md-6">{{ $attribute->attribute->name }}</div>
+												<div class="col-md-6">{{ $attribute->value }}</div>
+											</div>
+										</li>
 									@endif
 								@endforeach
-							</tbody>
-						</table>
+							</ul>
+						</div>
 					</div>
 				@endif
 				@if (count($character->skills) > 0)
@@ -199,26 +229,26 @@
 								Skills <i class="fa fa-chevron-down"></i>
 							</a>
 						</div>
-						<table id="skills" class="table table-condensed table-striped table-hover accordion-body collapse">
-							<thead>
-								<tr>
-									<th>Skill</th>
-									<th>Attribute</th>
-									<th>Value</th>
-								</tr>
-							</thead>
-							<tbody>
+						<div class="list-glow accordion-body collapse" id="skills">
+							<div class="list-glow-labels">
+								<div class="col-md-4">Skill</div>
+								<div class="col-md-4">Attribute</div>
+								<div class="col-md-4">Value</div>
+							</div>
+							<ul class="list-glow-group">
 								@foreach ($character->skills as $skill)
 									@if (!is_null($skill->skill) && $skill->value != 0)
-										<tr>
-											<td>{{ $skill->skill->name }}</td>
-											<td>{{ $skill->skill->attribute->name }}</td>
-											<td class="text-center">{{ $skill->value }}</td>
-										</tr>
+										<li>
+											<div class="list-glow-group-item list-glow-group-item-sm">
+												<div class="col-md-4">{{ $skill->skill->name }}</div>
+												<div class="col-md-4">{{ $skill->skill->attribute->name }}</div>
+												<div class="col-md-4">{{ $skill->value }}</div>
+											</div>
+										</li>
 									@endif
 								@endforeach
-							</tbody>
-						</table>
+							</ul>
+						</div>
 					</div>
 				@endif
 				@if (count($character->advantages) > 0)
@@ -228,22 +258,25 @@
 								Advantages <i class="fa fa-chevron-down"></i>
 							</a>
 						</div>
-						<table id="advantages" class="table table-condensed table-striped table-hover accordion-body collapse">
-							<thead>
-								<tr>
-									<th>Advantage</th>
-									<th>Value</th>
-								</tr>
-							</thead>
-							<tbody>
+						<div class="list-glow accordion-body collapse" id="advantages">
+							<div class="list-glow-labels">
+								<div class="col-md-6">Advantage</div>
+								<div class="col-md-6">Value</div>
+							</div>
+							<ul class="list-glow-group">
 								@foreach ($character->advantages as $advantage)
-									<tr>
-										<td>{{ $advantage->trait->name }}</td>
-										<td class="text-center">{{ $advantage->value }}</td>
-									</tr>
+									@if ($advantage->value == 0)
+										<?php continue; ?>
+									@endif
+									<li>
+										<div class="list-glow-group-item list-glow-group-item-sm">
+											<div class="col-md-6">{{ $advantage->trait->name }}</div>
+											<div class="col-md-6">{{ $advantage->value }}</div>
+										</div>
+									</li>
 								@endforeach
-							</tbody>
-						</table>
+							</ul>
+						</div>
 					</div>
 				@endif
 				@if (count($character->disadvantages) > 0)
@@ -253,22 +286,25 @@
 								Disadvantages <i class="fa fa-chevron-down"></i>
 							</a>
 						</div>
-						<table id="disadvantages" class="table table-condensed table-striped table-hover accordion-body collapse">
-							<thead>
-								<tr>
-									<th>Disadvantage</th>
-									<th>Value</th>
-								</tr>
-							</thead>
-							<tbody>
+						<div class="list-glow accordion-body collapse" id="disadvantages">
+							<div class="list-glow-labels">
+								<div class="col-md-6">Disadvantage</div>
+								<div class="col-md-6">Value</div>
+							</div>
+							<ul class="list-glow-group">
 								@foreach ($character->disadvantages as $disadvantage)
-									<tr>
-										<td>{{ $disadvantage->trait->name }}</td>
-										<td class="text-center">{{ $disadvantage->value }}</td>
-									</tr>
+									@if ($disadvantage->value == 0)
+										<?php continue; ?>
+									@endif
+									<li>
+										<div class="list-glow-group-item list-glow-group-item-sm">
+											<div class="col-md-6">{{ $disadvantage->trait->name }}</div>
+											<div class="col-md-6">{{ $disadvantage->value }}</div>
+										</div>
+									</li>
 								@endforeach
-							</tbody>
-						</table>
+							</ul>
+						</div>
 					</div>
 				@endif
 			</div>

@@ -49,6 +49,7 @@ Route::group(array('before' => 'auth|permission:GAME_MASTER'), function()
 
 	Route::controller('game/master/character'		, 'Game_Master_CharacterController');
 	Route::controller('game/master/enemy'			, 'Game_Master_EnemyController');
+	Route::controller('game/master/creature'		, 'Game_Master_CreatureController');
 	Route::controller('game/master/entity'			, 'Game_Master_EntityController');
 
 	Route::controller('game/master'					, 'Game_MasterController');

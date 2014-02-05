@@ -12,7 +12,8 @@ class Game_Master_ItemController extends Game_Master_RulesController {
 				->addTab('Items', 'items')
 				->buildPanel()
 			->setHeader('game.master.rules.components.breadcrumbs')
-			->setDefaultTab(2)
+		->setDefaultTab(2)
+		->setGlow(true)
 		->make();
 	}
 

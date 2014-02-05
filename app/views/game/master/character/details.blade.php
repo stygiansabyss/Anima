@@ -1,4 +1,4 @@
-{{ bForm::ajaxForm('detailsForm', 'Character details updated')->open() }}
+{{ bForm::ajaxForm('detailsForm', $type .' details updated')->open() }}
 	<div class="panel panel-default">
 		<div class="panel-heading">Character Details</div>
 		<div class="panel-body">
@@ -12,7 +12,7 @@
 			{{ bForm::text('copper', $details->copper, array('placeholder' => 'Copper'), 'Copper') }}
 			{{ bForm::textarea('armorWeapons', $details->armorWeapons, array('placeholder' => 'Armor & Weapons'), 'Armor & Weapons') }}
 			{{ bForm::textarea('generalItems', $details->generalItems, array('placeholder' => 'General Items'), 'General Items') }}
-			{{ bForm::jsonSubmit('Update Character') }}
+			{{ bForm::jsonSubmit('Update '. $type) }}
 		</div>
 		<div class="panel-footer">
 			<div id="message"></div>

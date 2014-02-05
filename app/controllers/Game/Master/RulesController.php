@@ -9,7 +9,7 @@ class Game_Master_RulesController extends BaseController {
 	public function getIndex()
 	{
 		if ($this->magicType != null) {
-			LeftTab::setHeader('game.master.rules.components.breadcrumbs');
+			LeftTab::setHeader('game.master.rules.components.breadcrumbs')->setGlow(true);
 
 			$leftTabPanel = LeftTab::addPanel();
 			$leftTabPanel->setTitle($this->areaName);

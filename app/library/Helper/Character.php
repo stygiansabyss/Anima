@@ -528,6 +528,8 @@ class Helper_Character extends Helper_Forum {
 			$this->addStatusToCharacter('INACTIVE', $newObject->id, 'Enemy');
 		}
 
+		$this->addStatusToCharacter('NPC', $newObject->id, 'Enemy');
+
 		$this->addCharacterToGame('Enemy', $newObject->id, $oldGameNewId);
 	}
 	protected function moveCreatures($object, $oldGameNewId)

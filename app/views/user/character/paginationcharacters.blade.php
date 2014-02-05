@@ -1,4 +1,4 @@
-<div class="row" id="ajaxContext_{{ $type }}_{{ time() }}">
+<div class="row">
 	<div class="col-md-12">
 		@foreach ($characters as $character)
 			<div class="media well">
@@ -8,11 +8,7 @@
 				<div class="media-body">
 					<div class="row">
 						<div class="col-md-3">
-							@if ($type == 'enemy')
-								<h4 class="media-heading">{{ HTML::link('/character/sheet/'. $character->id, $character->name, array('class' => 'text-error')) }}</h4>
-							@else
-								<h4 class="media-heading">{{ HTML::link('/character/sheet/'. $character->id, $character->name) }}</h4>
-							@endif
+							<h4 class="media-heading">{{ HTML::link('/character/sheet/'. $character->id, $character->name) }}</h4>
 							<ul class="list-inline">
 								<li>Level {{ $character->details->level }} {{ $character->class != null ? $character->class->gameClass->name : 'unknown' }}</li>
 							</ul>
@@ -31,13 +27,9 @@
 						<div class="col-md-3">
 							<h4 class="media-heading">Actions</h4>
 							<div class="btn-group">
-								@if ($type == 'character')
-									{{ HTML::link('/user/characters/games/'. $character->id, 'Request Games', array('class' => 'btn btn-xs btn-info')) }}
-								@endif
 								{{ HTML::link('/character/sheet/'. $character->id, 'View', array('class' => 'btn btn-xs btn-primary')) }}
 								{{ HTML::link('/character/spellbook/'. $character->id, 'Spellbook', array('class' => 'btn btn-xs btn-primary')) }}
 								{{ HTML::editButton('user/characters/edit/'. $character->id) }}
-								{{ HTML::deleteButton('user/characters/delete/'. $character->id) }}
 							</div>
 						</div>
 					</div>
@@ -45,7 +37,7 @@
 			</div>
 		@endforeach
 	</div>
-	<div class="text-center" id="{{ $type }}">
+	<div class="text-center" id="character">
 		{{ $characters->links() }}
 	</div>
 </div>
@@ -53,10 +45,10 @@
 <script>
 	@section('onReadyJs')
 		// Make twitter paginator ajax
-		$('#{{ $type }} .pagination a').on('click', function (event) {
+		$('.pagination a').on('click', function (event) {
 			event.preventDefault();
 			if ( $(this).attr('href') != '#') {
-				$('#ajaxContext_{{ $type }}_{{ time() }}').load($(this).attr('href'));
+				$('#ajaxContent').load($(this).attr('href'));
 			}
 		});
 	@stop

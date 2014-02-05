@@ -45,15 +45,16 @@ class BaseCharacter extends BaseModel {
 				$resource = $this->stats()->get()->where('stat_id', $id)->first();
 			break;
 			case 'Attribute':
-				$resource = $this->attributes()->get()->where('attribute_id', $id)->first();
-			break;
 			case 'AttributeMod':
+			case 'AttributeModOnly':
 				$resource = $this->attributes()->get()->where('attribute_id', $id)->first();
 			break;
 			case 'SecondaryAttribute':
 				$resource = $this->secondaryAttributes()->get()->where('attribute_id', $id)->first();
 			break;
 			case 'Skill':
+			case 'SkillMod':
+			case 'SkillFinal':
 				$resource = $this->skills()->get()->where('skill_id', $id)->first();
 			break;
 			case 'Trait':
@@ -61,7 +62,52 @@ class BaseCharacter extends BaseModel {
 			break;
 		}
 		if ($resource != null) {
-			if ($type == 'AttributeMod') {
+			if ($type == 'AttributeModOnly') {
+				return $resource->modifier > 0 ? '+'. $resource->modifier : $resource->modifier;
+			} elseif ($type == 'AttributeMod') {
+				return $resource->value .' ('. ($resource->modifier > 0 ? '+'. $resource->modifier : $resource->modifier).')';
+			} elseif ($type == 'SkillMod') {
+				return $this->getValue('AttributeModOnly', $resource->skill->attribute_id);
+			} elseif ($type == 'SkillFinal') {
+				$attribute = str_replace('+', '', $this->getValue('AttributeModOnly', $resource->skill->attribute_id));
+				$skillValue = $resource->value;
+
+				return $skillValue + $attribute;
+			} else {
+				return $resource->value;
+			}
+		}
+		return null;
+	}
+
+	public function getValueByName($type, $name)
+	{
+		switch ($type) {
+			case 'Appearance':
+				$resource = $this->appearances()->get()->where('appearance->name', $name)->first();
+			break;
+			case 'Stat':
+				$resource = $this->stats()->get()->where('stat->name', $name)->first();
+			break;
+			case 'Attribute':
+			case 'AttributeMod':
+			case 'AttributeModOnly':
+				$resource = $this->attributes()->get()->where('attribute->name', $name)->first();
+			break;
+			case 'SecondaryAttribute':
+				$resource = $this->secondaryAttributes()->get()->where('attribute->name', $name)->first();
+			break;
+			case 'Skill':
+				$resource = $this->skills()->get()->where('skill->name', $name)->first();
+			break;
+			case 'Trait':
+				$resource = $this->traits()->get()->where('trait->name', $name)->first();
+			break;
+		}
+		if ($resource != null) {
+			if ($type == 'AttributeModOnly') {
+				return $resource->modifier > 0 ? '+'. $resource->modifier : $resource->modifier;
+			} elseif ($type == 'AttributeMod') {
 				return $resource->value .' ('. ($resource->modifier > 0 ? '+'. $resource->modifier : $resource->modifier).')';
 			} else {
 				return $resource->value;

@@ -11,6 +11,15 @@ class CharacterPresenter extends Syntax\Core\CorePresenter {
 		return 'Unknown';
 	}
 
+	public function classId()
+	{
+		if ($this->resource->class != null) {
+			return $this->resource->class->gameClass->id;
+		}
+
+		return 0;
+	}
+
 	public function hitPointsPercent()
 	{
 		$percentObject = new stdClass();
@@ -73,23 +82,35 @@ class CharacterPresenter extends Syntax\Core\CorePresenter {
 		return HTML::image('img/no_user.png', null, array('class'=> 'media-object pull-left', 'style' => 'width: 100px;'));
 	}
 
+	public function avatarPath()
+	{
+		$class     = getRootClass($this->resource);
+		$imagePath = 'img/avatars/'. $class .'/'. Str::studly($this->resource->name) .'.png';
+
+		if (file_exists(public_path() .'/'. $imagePath)) {
+			return '/'. $imagePath;
+		}
+
+		return '/img/no_user.png';
+	}
+
 	public function hiddenButton()
 	{
 		return HTML::linkIcon(
-			'/game/master/update/'. $this->resource->id .'/hiddenFlag/'. ($this->resource->hiddenFlag == 1 ? 0 : 1) .'/'. getRootClass($this->resource),
-			($this->resource->hiddenFlag == 1 ? 'fa fa-eye-slash' : 'fa fa-eye'),
+			'/game/master/status/'. $this->resource->id .'/'. getRootClass($this->resource) .'/HIDDEN/'. ($this->resource->checkStatus('HIDDEN') ? 0 : 1),
+			($this->resource->checkStatus('HIDDEN') ? 'fa fa-eye-slash' : 'fa fa-eye'),
 			null,
-			array('class' => 'btn btn-xs btn-primary', 'title' => ($this->resource->hiddenFlag == 1 ? 'Make Visible' : 'Make Hidden'))
+			array('class' => 'btn btn-xs btn-primary', 'title' => ($this->resource->checkStatus('HIDDEN') ? 'Make Visible' : 'Make Hidden'))
 		);
 	}
 
 	public function activeButton()
 	{
 		return HTML::linkIcon(
-			'/game/master/update/'. $this->resource->id .'/activeFlag/'. ($this->resource->activeFlag == 1 ? 0 : 1) .'/'. getRootClass($this->resource),
-			($this->resource->activeFlag == 1 ? 'fa fa-check' : 'fa fa-times'),
+			'/game/master/status/'. $this->resource->id .'/'. getRootClass($this->resource) .'/ACTIVE/'. ($this->resource->checkStatus('ACTIVE') ? 0 : 1),
+			($this->resource->checkStatus('ACTIVE') ? 'fa fa-check' : 'fa fa-times'),
 			null,
-			array('class' => 'btn btn-xs btn-primary', 'title' => ($this->resource->activeFlag == 1 ? 'Make Inactive' : 'Make Active'))
+			array('class' => 'btn btn-xs btn-primary', 'title' => ($this->resource->checkStatus('ACTIVE') ? 'Make Inactive' : 'Make Active'))
 		);
 	}
 
@@ -106,7 +127,7 @@ class CharacterPresenter extends Syntax\Core\CorePresenter {
 	public function editButton($gameId)
 	{
 		return HTML::linkIcon(
-			'/game/master/'. getRootClass($this->resource, true) .'/edit/'. $this->resource->id .'/'. $gameId,
+			'/game/master/'. getRootClass($this->resource, true) .'/update/'. $gameId .'/'. $this->resource->id,
 			'fa fa-edit',
 			null,
 			array('class' => 'btn btn-xs btn-primary', 'title' => 'Edit')
@@ -125,9 +146,10 @@ class CharacterPresenter extends Syntax\Core\CorePresenter {
 
 	public function addExpButton()
 	{
+		$exp = $this->resource->details ? $this->resource->details->experience : 0;
 		return '
 			<a href="#grantExp"
-				onClick="$(\'#exp_character_id\').val(\''. $this->resource->id .'\');$(\'#exp_character_type\').val(\''. getRootClass($this->resource) .'\');$(\'#exp_character_name\').text(\''. $this->resource->name .'\');$(\'#exp_character_exp\').text(\''. $this->resource->details->experience .'\');"
+				onClick="$(\'#exp_character_id\').val(\''. $this->resource->id .'\');$(\'#exp_character_type\').val(\''. getRootClass($this->resource) .'\');$(\'#exp_character_name\').text(\''. str_replace('\'', '\\\'', $this->resource->name) .'\');$(\'#exp_character_exp\').text(\''. $exp .'\');"
 				role="button"
 				data-toggle="modal"
 				class="btn btn-xs btn-primary"
@@ -144,5 +166,29 @@ class CharacterPresenter extends Syntax\Core\CorePresenter {
 				<i class="fa fa-book" title="Experience History"></i>
 			</a>
 		';
+	}
+
+	public function hair()
+	{
+		$appearances = Character::find($this->resource->id)->appearances;
+		return $appearances->where('appearance->name', 'Hair')->first()->value;
+	}
+
+	public function eyes()
+	{
+		$appearances = Character::find($this->resource->id)->appearances;
+		return $appearances->where('appearance->name', 'Eyes')->first()->value;
+	}
+
+	public function age()
+	{
+		$appearances = Character::find($this->resource->id)->appearances;
+		return $appearances->where('appearance->name', 'Age')->first()->value;
+	}
+
+	public function gender()
+	{
+		$appearances = Character::find($this->resource->id)->appearances;
+		return $appearances->where('appearance->name', 'Gender')->first()->value;
 	}
 }
