@@ -7,7 +7,7 @@
 	@endif
 	<div style="width: 64px; height: 64px; margin: 0px auto 5px auto;">
 		@if (Request::Ajax())
-			<a href="javascript:void(0)" onClick="editCharacter('{{ $character->id }}', '{{ getRootClass($character) }}', '{{ $character->name }}')">
+			<a href="javascript:void(0)" onClick="editCharacter('{{ $character->id }}', '{{ getRootClass($character) }}', '{{ str_replace('\'', '\\\'', $character->name) }}')">
 				{{ $character->avatar }}
 			</a>
 		@else

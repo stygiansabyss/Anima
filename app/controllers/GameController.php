@@ -42,6 +42,48 @@ class GameController extends BaseController {
 
 	public function postUpdateCharacter()
 	{
-		ppd(Input::all());
+		$this->skipView();
+
+		$input = e_array(Input::all());
+
+		if ($input != null) {
+			$character = $input['morph_type']::find($input['morph_id']);
+
+			$type = $input['type'];
+
+			$dmge = $input['dmg'];
+			$used = $input['use'];
+
+			$fullHp = $character->details->hitPoints;
+			$tempHp = $character->details->tempHitPoints;
+			$fullMp = $character->details->magicPoints;
+			$tempMp = $character->details->tempMagicPoints;
+
+			if ($dmge != null || $type == 'resetHit') {
+				$character->details->tempHitPoints = $this->handleCalculation($type, $tempHp, $fullHp, $dmge);
+			}
+
+			if ($used != null || $type == 'resetMagic') {
+				$character->details->tempMagicPoints = $this->handleCalculation($type, $tempMp, $fullMp, $used);
+			}
+
+			$character->details->save();
+		}
+	}
+
+	protected function handleCalculation($type, $originalValue, $fullValue, $amount)
+	{
+		switch ($type) {
+			case 'sub':
+				return $originalValue - $amount;
+			break;
+			case 'add':
+				return $originalValue + $amount;
+			break;
+			case 'resetMagic':
+			case 'resetHit':
+				return $fullValue;
+			break;
+		}
 	}
 }

@@ -18,7 +18,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">Modify Character</div>
 			<div class="panel-body">
-				{{ bForm::setType('basic')->open(false, array('id' => 'characterForm')) }}
+				{{ bForm::setSizes(2, 8)->setType('basic')->open(false, array('id' => 'characterForm')) }}
 					{{ form::hidden('morph_type', null, array('id' => 'morph_type')) }}
 					{{ form::hidden('morph_id', null, array('id' => 'morph_id')) }}
 					{{ form::hidden('type', null, array('id' => 'type')) }}
@@ -27,13 +27,16 @@
 					{{ bForm::text('use', null, array('id' => 'use'), 'Use Magic') }}
 					<div class="form-group">
 						<div class="row text-center">
-							<div class="col-md-4">
-								<i class="fa fa-reply" onClick="formSubmit('reset')"></i>
+							<div class="col-md-3">
+								<i class="fa fa-reply" onClick="formSubmit('resetHit')" title="Reset LP"></i>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
+								<i class="fa fa-reply" onClick="formSubmit('resetMagic')" title="Reset Magic"></i>
+							</div>
+							<div class="col-md-3">
 								<i class="fa fa-plus-circle" onClick="formSubmit('add')"></i>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<i class="fa fa-minus-circle" onClick="formSubmit('sub')"></i>
 							</div>
 						</div>
@@ -54,17 +57,17 @@
 			$('#morph_id').val(characterId);
 			$('#morph_type').val(type);
 			$('#name').val(name);
-			console.log(characterId);
-			console.log(type);
-			console.log(name);
 		}
 
 		function formSubmit(type) {
-			// Send form to node method
-			$('#type').val(type);
-			$.post('/game/update-character/{{ $gameId }}', $('#characterForm').serialize());
-			console.log(type);
-			$('#characterForm').find("input[type=text], input[type=hidden]").val("");
+			if ($('#name').val() == '') {
+				Messenger().post({message: 'Select a character', type: 'error', showCloseButton: true});
+			} else {
+				// Send form to node method
+				$('#type').val(type);
+				$.post('/game/update-character/{{ $gameId }}', $('#characterForm').serialize());
+				$('#characterForm').find("input[type=text], input[type=hidden]").val("");
+			}
 		}
 
 		// Handle the tabs
