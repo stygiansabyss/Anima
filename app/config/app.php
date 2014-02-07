@@ -129,10 +129,12 @@ return array(
 		'Way\Generators\GeneratorsServiceProvider',
 		'Juy\Profiler\Providers\ProfilerServiceProvider',
 		'Intervention\Image\ImageServiceProvider',
+		'anlutro\cURL\Laravel\cURLServiceProvider',
 		'McCool\LaravelAutoPresenter\LaravelAutoPresenterServiceProvider',
 		'Syntax\Core\CoreServiceProvider',
 		'Syntax\Core\View\ViewServiceProvider',
 		'Syntax\Core\Forum\ForumServiceProvider',
+		'Syntax\Core\Support\SupportServiceProvider',
 		'Syntax\Core\Control\CoreBugServiceProvider',
 		'Syntax\Core\Utility\UtilityServiceProvider',
 		'Syntax\Core\Utility\AliasServiceProvider',
@@ -203,6 +205,7 @@ return array(
 		'URL'         => 'Illuminate\Support\Facades\URL',
 		'Image'       => 'Intervention\Image\Facades\Image',
 		'ParseChat'   => 'Library\Facades\ParseChat',
+		'cURL' 		  => 'anlutro\cURL\Laravel\cURL'
 
 	),
 

@@ -46,6 +46,18 @@ class HomeController extends Core_HomeController {
         $this->setViewData('gameMasters', $gameMasters);
     }
 
+    public function getTest()
+    {
+        $this->skipView();
+
+        Syntax\Core\Support\Facades\Support::create('4TIa40HLWA')
+                                           ->pushToGithub('stygiansabyss', 'Anima', true, 'Enhancement', 1, 'Add more chat color options.');
+
+        ppd(Syntax\Core\Support\Facades\Support::get());
+
+        die;
+    }
+
     public function getDbSeeder()
     {
         $this->skipView();

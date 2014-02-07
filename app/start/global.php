@@ -83,4 +83,3 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
-// require base_path().'/workbench/syntax/core/src/views/helpers/customFormFields.php';
