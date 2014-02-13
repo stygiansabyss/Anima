@@ -5,7 +5,7 @@
 			<div class="panel-body">
 				<h4>Generate Stat Rolls</h4>
 				<div>
-					To create a character you will first need to create your stat rolls.  You can do this by going to {{ HTML::link('/user/characters/roll', 'The roll generation page') }}.  This page will generate 10 rolls randonly for you.
+					To create a character you will first need to create your stat rolls.  You can do this by going to {{ HTML::link('/user/characters/roll', 'The roll generation page') }}.  This page will generate 10 rolls randomly for you.
 					<br />
 					<br />
 					You must get a character approved before you can generate a new set of rolls.  Once they are created, they cannot be re-rolled.

@@ -134,7 +134,7 @@ return array(
 		'Syntax\Core\CoreServiceProvider',
 		'Syntax\Core\View\ViewServiceProvider',
 		'Syntax\Core\Forum\ForumServiceProvider',
-		'Syntax\Core\Support\SupportServiceProvider',
+		// 'Syntax\Core\Support\SupportServiceProvider',
 		'Syntax\Core\Control\CoreBugServiceProvider',
 		'Syntax\Core\Utility\UtilityServiceProvider',
 		'Syntax\Core\Utility\AliasServiceProvider',
