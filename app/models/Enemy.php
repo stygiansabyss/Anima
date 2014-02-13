@@ -60,6 +60,8 @@ class Enemy extends BaseCharacter {
 		'appearances'         => array('morphMany',	'Character_Appearance',			'name'       => 'morph'),
 		'class'               => array('morphOne',	'Character_Class',				'name'       => 'morph'),
 		'status'              => array('morphMany',	'Character_Status',				'name'       => 'morph'),
+		'posts'               => array('morphMany',	'Forum_Post',					'name'       => 'morph'),
+		'replies'             => array('morphMany',	'Forum_Reply',					'name'       => 'morph'),
 	);
 
 	/********************************************************************
@@ -69,6 +71,14 @@ class Enemy extends BaseCharacter {
 	/********************************************************************
 	 * Getter and Setter methods
 	 *******************************************************************/
+	public function getClassNameAttribute()
+	{
+		if ($this->class != null) {
+			return $this->class->gameClass->name;
+		}
+
+		return 'Unknown';
+	}
 
 	/********************************************************************
 	 * Extra Methods

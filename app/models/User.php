@@ -12,6 +12,7 @@ class User extends Syntax\Core\User {
 			'games'      => array('hasMany', 'Game_Storyteller',	'foreignKey' => 'user_id'),
 			'characters' => array('hasMany', 'Character',			'foreignKey' => 'user_id'),
 			'enemies'    => array('hasMany', 'Enemy',				'foreignKey' => 'user_id'),
+			'creatures'  => array('hasMany', 'Creature',			'foreignKey' => 'user_id'),
 			'rolls'      => array('hasMany', 'Character_Roll',		'foreignKey' => 'user_id', 'orderBy' => array('roll', 'desc')),
 		));
 	}

@@ -40,6 +40,10 @@ class Entity extends BaseModel {
 	/********************************************************************
 	 * Relationships
 	 *******************************************************************/
+	public static $relationsData = array(
+		'posts'               => array('morphMany',	'Forum_Post',					'name'       => 'morph'),
+		'replies'             => array('morphMany',	'Forum_Reply',					'name'       => 'morph'),
+	);
 	
 	/********************************************************************
 	 * Model Events
@@ -54,6 +58,10 @@ class Entity extends BaseModel {
 			return '/img/avatars/Entity/'. Str::studly($this->name) .'.png';
 		}
 
+		return null;
+	}
+	public function getClassNameAttribute()
+	{
 		return null;
 	}
 	

@@ -40,6 +40,14 @@
 							</a>
 						</li>
 						<li class="divider"></li>
+						@foreach ($activeUser->getEntities() as $character)
+							<li>
+								<a href="javascript: void(0);" id="character_{{ $character->id }}" onClick="setCharacter('{{ $character->id }}');" data-id="{{ $character->id }}" data-type="{{ getRootClass($character) }}">
+									{{ $character->name }}
+								</a>
+							</li>
+						@endforeach
+						<li class="divider"></li>
 						@if (count($activeUser->getGameCharacters($chatRoom->game_id)) > 0)
 							@foreach ($activeUser->getGameCharacters($chatRoom->game_id) as $character)
 								@if ($character->checkStatus(array('APPROVED', 'ACTIVE'), true))

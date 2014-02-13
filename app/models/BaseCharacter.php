@@ -35,6 +35,18 @@ class BaseCharacter extends BaseModel {
 		return $disadvantages;
 	}
 
+	/**
+	 * Get the number of posts from this user
+	 *
+	 */
+	public function getPostsCountAttribute()
+	{
+		$postsCount   = $this->posts->count();
+		$repliesCount = $this->replies->count();
+
+		return $postsCount + $repliesCount;
+	}
+
 	public function getValue($type, $id)
 	{
 		switch ($type) {
