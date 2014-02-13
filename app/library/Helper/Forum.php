@@ -104,7 +104,11 @@ class Helper_Forum extends Helper_Message {
 
 				if ($boardId == '0') continue;
 
-				$character = $this->findCharacterById($object->character_id);
+				if ($object->character_id != null) {
+					$character = $this->findCharacterById($object->character_id);
+				} else {
+					$character = null;
+				}
 				$newObject                      = new Forum_Post;
 				$newObject->name                = $object->name;
 				$newObject->keyName             = $object->keyName;
@@ -151,7 +155,11 @@ class Helper_Forum extends Helper_Message {
 
 				if ($postId == '0') continue;
 
-				$character = $this->findCharacterById($object->character_id);
+				if ($object->character_id != null) {
+					$character = $this->findCharacterById($object->character_id);
+				} else {
+					$character = null;
+				}
 				$newObject                      = new Forum_Reply;
 				$newObject->name                = $object->name;
 				$newObject->keyName             = $object->keyName;
@@ -261,6 +269,7 @@ class Helper_Forum extends Helper_Message {
 		if ($this->confirm('Do you wish to move post views? [yes|no]')) {
 			// Move the user viewed posts
 			$postViewed = DB::table('stygian_main.forum_user_view_posts')->get();
+			$existingViews = Forum_Post_View::all();
 
 			foreach ($postViewed as $object) {
 				$postId = $this->getIdForOldId('Forum_Post', $object->forum_post_id);

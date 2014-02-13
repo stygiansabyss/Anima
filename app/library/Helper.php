@@ -28,4 +28,29 @@ class Helper extends Command {
 
 		return $object->id;
 	}
+
+	protected function findCharacterById($characterId)
+	{
+		// Check characters first
+		$character = Character::where('oldId', $characterId)->first();
+
+		if (!is_null($character)) return $character;
+
+		// Check enemies
+		$enemy = Enemy::where('oldId', $characterId)->first();
+
+		if (!is_null($enemy)) return $enemy;
+
+		// Check entities
+		$entity = Entity::where('oldId', $characterId)->first();
+
+		if (!is_null($entity)) return $entity;
+
+		// Check creatures
+		$creature = Creature::where('oldId', $characterId)->first();
+
+		if (!is_null($creature)) return $creature;
+
+		return null;
+	}
 }

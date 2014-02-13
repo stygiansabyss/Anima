@@ -616,31 +616,6 @@ class Helper_Character extends Helper_Forum {
 		$characterGame->save();
 	}
 
-	protected function findCharacterById($characterId)
-	{
-		// Check characters first
-		$character = Character::where('oldId', $characterId)->first();
-
-		if (!is_null($character)) return $character;
-
-		// Check enemies
-		$enemy = Enemy::where('oldId', $characterId)->first();
-
-		if (!is_null($enemy)) return $enemy;
-
-		// Check entities
-		$entity = Entity::where('oldId', $characterId)->first();
-
-		if (!is_null($entity)) return $entity;
-
-		// Check creatures
-		$creature = Creature::where('oldId', $characterId)->first();
-
-		if (!is_null($creature)) return $creature;
-
-		return null;
-	}
-
 	protected function convertDetails($character, $type)
 	{
 		$oldCharacter  = DB::table('stygian_main.characters')
