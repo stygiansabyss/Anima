@@ -56,7 +56,7 @@ class Game extends BaseModel {
 	public function getPlayerCharactersAttribute()
 	{
 		$characters = $this->characters->filter(function ($character) {
-			if (!$character->morph->checkStatus('APPROVED')) return false;
+			if (!$character->morph->checkStatus(array('APPROVED', 'ACTIVE'), true)) return false;
 			if ($character->morph->checkStatus(array('DEAD', 'INACTIVE', 'NPC'))) return false;
 			if ($character->morph_type == 'Character') return true;
 		})->morph->sortBy(function ($character) {
@@ -120,6 +120,7 @@ class Game extends BaseModel {
 	{
 		$characters = $this->characters->morph->filter(function ($character) {
 			if ($character->checkStatus(array('DEAD', 'INACTIVE'))) return true;
+			if (!$character->checkStatus('ACTIVE')) return true;
 		})->sortBy(function ($character) {
 			return $character->name;
 		});
