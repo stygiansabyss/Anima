@@ -38,7 +38,7 @@
 										&nbsp;
 									@endif
 								</td>
-								<td>{{ HTML::link('/profile/user/'. $chatRoom->user_id, $chatRoom->user->username) }}</td>
+								<td>{{ HTML::link('/user/view/'. $chatRoom->user_id, $chatRoom->user->username) }}</td>
 								@if ($create)
 									<td class="text-right">
 										<div class="btn-group">

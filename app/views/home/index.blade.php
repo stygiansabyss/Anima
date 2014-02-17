@@ -15,8 +15,8 @@
 				<div class="pull-left"><small>{{ $newsItem->created_at }}</small></div>
 				<div class="pull-right">
 					<small>
-						By: {{ HTML::link('user/view/'. $newsItem->author->id, $newsItem->author->username) }}&nbsp;|&nbsp;
-						{{ HTML::link('forum/post/view/'. $newsItem->uniqyeId, $newsItem->repliesCount .' '. Str::plural('Reply', $newsItem->repliesCount)) }}
+						By: {{ HTML::link('/user/view/'. $newsItem->author->id, $newsItem->author->username) }}&nbsp;|&nbsp;
+						{{ HTML::link('/forum/post/view/'. $newsItem->id, $newsItem->repliesCount .' '. Str::plural('Reply', $newsItem->repliesCount)) }}
 					</small>
 				</div>
 				<div class="clearfix"></div>

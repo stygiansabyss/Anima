@@ -2,6 +2,13 @@
 
 class Forum_PostController extends Core_Forum_PostController {
 
+    public function getView($postId, $page = 1)
+    {
+        $post = Forum_Post::with('author', 'status')->find($postId);
+
+        ForumPost::setRepliesPerPage(7)->setUp($post, $page)->make();
+    }
+
     protected function submitReply($input, $post)
     {
         $message = e($input['content']);
