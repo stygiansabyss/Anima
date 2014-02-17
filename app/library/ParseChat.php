@@ -23,7 +23,7 @@ class ParseChat {
 	public function parseForCreate($message, $morphId, $morphType)
 	{
 		$this->message = $message;
-		$parsedMessage = BBCode::parse($message);
+		$parsedMessage = $message;
 		$parsedMessage = $this->parseCharacterStatsForCreate($parsedMessage, $morphId, $morphType);
 
 		return $parsedMessage;

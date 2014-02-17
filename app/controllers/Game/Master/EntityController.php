@@ -48,7 +48,7 @@ class Game_Master_EntityController extends BaseController {
 			$entity->name        = $input['name'];
 			$entity->color       = $input['color'];
 			$entity->description = $input['description'];
-			$entity->hiddenFlag  = isset($input['hiddenFlag']) ? 1 : 0;
+			// $entity->hiddenFlag  = isset($input['hiddenFlag']) ? 1 : 0;
 			$entity->activeFlag  = isset($input['activeFlag']) ? 1 : 0;
 
 			$this->checkErrorsSave($entity);

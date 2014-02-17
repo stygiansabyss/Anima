@@ -167,7 +167,7 @@ class ChatController extends Core_ChatController {
 			}
 
 			if (!is_null($chat->morph_id)) {
-				$newChat .= '[b][url=/character/sheet/'. $chat->morph_id.']'. $chat->morph->name .'[/url][/b]';
+				$newChat .= '[color='. $chat->morph->color .'][b][url=/character/sheet/'. $chat->morph_id.']'. $chat->morph->name .'[/url][/b][/color]';
 			} else {
 				if (!is_null($chat->room->game_id)) {
 					$newChat .= '[b][spanClass=text-muted][small](OOC)[/small][/spanClass] [url=/user/view/'. $chat->user_id.']'. $chat->user->username .'[/url][/b]';
