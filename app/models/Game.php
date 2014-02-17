@@ -155,6 +155,9 @@ class Game extends BaseModel {
 		$characters = $this->characters->morph;
 
 		if (count($characters) > 0) {
+			$characters = $characters->filter(function ($character) {
+				if (isset($character->customTrees) && $character->customTrees != null) return true;
+			});
 			$unapprovedTrees = $characters->customTrees->filter(function ($tree) {
 				if ($tree->approvedFlag == 0) {
 					return true;
@@ -177,6 +180,9 @@ class Game extends BaseModel {
 		$characters = $this->characters->morph;
 
 		if (count($characters) > 0) {
+			$characters = $characters->filter(function ($character) {
+				if (isset($character->customSpells) && $character->customSpells != null) return true;
+			});
 			$unapprovedSpells = $characters->customSpells->filter(function ($spell) {
 				if ($spell->approvedFlag == 0) {
 					return true;
@@ -199,6 +205,9 @@ class Game extends BaseModel {
 		$characters = $this->characters->morph;
 
 		if (count($characters) > 0) {
+			$characters = $characters->filter(function ($character) {
+				if (isset($character->spells) && $character->spells != null) return true;
+			});
 			$unapprovedSpells = $characters->spells->filter(function ($spell) {
 				if ($spell->approvedFlag == 0) {
 					return true;
@@ -218,7 +227,7 @@ class Game extends BaseModel {
 	public function getUnApprovedCharactersAttribute()
 	{
 		// Get all characters
-		$characters = $this->characters->morph;
+		$characters = $this->characters;
 
 		if (count($characters) > 0) {
 			$unapprovedCharacters = $characters->filter(function ($character) {
