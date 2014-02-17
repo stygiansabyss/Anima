@@ -40,16 +40,42 @@
 							</a>
 						</li>
 						<li class="divider"></li>
-						@foreach ($activeUser->getEntities() as $character)
-							<li>
-								<a href="javascript: void(0);" id="character_{{ $character->id }}" onClick="setCharacter('{{ $character->id }}');" data-id="{{ $character->id }}" data-type="{{ getRootClass($character) }}">
-									{{ $character->name }}
-								</a>
-							</li>
-						@endforeach
-						<li class="divider"></li>
+						@if ($activeUser->checkPermission('POST_AS_ENTITY'))
+							@foreach ($activeUser->getEntities() as $character)
+								<li>
+									<a href="javascript: void(0);" id="character_{{ $character->id }}" onClick="setCharacter('{{ $character->id }}');" data-id="{{ $character->id }}" data-type="{{ getRootClass($character) }}">
+										{{ $character->name }}
+									</a>
+								</li>
+							@endforeach
+						@endif
 						@if (count($activeUser->getGameCharacters($chatRoom->game_id)) > 0)
+							<li class="divider"></li>
 							@foreach ($activeUser->getGameCharacters($chatRoom->game_id) as $character)
+								@if ($character->checkStatus(array('APPROVED', 'ACTIVE'), true))
+									<li>
+										<a href="javascript: void(0);" id="character_{{ $character->id }}" onClick="setCharacter('{{ $character->id }}');" data-id="{{ $character->id }}" data-type="{{ getRootClass($character) }}">
+											{{ $character->name }}
+										</a>
+									</li>
+								@endif
+							@endforeach
+						@endif
+						@if (count($activeUser->getGameEnemies($chatRoom->game_id)) > 0)
+							<li class="divider"></li>
+							@foreach ($activeUser->getGameEnemies($chatRoom->game_id) as $character)
+								@if ($character->checkStatus(array('APPROVED', 'ACTIVE'), true))
+									<li>
+										<a href="javascript: void(0);" id="character_{{ $character->id }}" onClick="setCharacter('{{ $character->id }}');" data-id="{{ $character->id }}" data-type="{{ getRootClass($character) }}">
+											{{ $character->name }}
+										</a>
+									</li>
+								@endif
+							@endforeach
+						@endif
+						@if (count($activeUser->getGameCreatures($chatRoom->game_id)) > 0)
+							<li class="divider"></li>
+							@foreach ($activeUser->getGameCreatures($chatRoom->game_id) as $character)
 								@if ($character->checkStatus(array('APPROVED', 'ACTIVE'), true))
 									<li>
 										<a href="javascript: void(0);" id="character_{{ $character->id }}" onClick="setCharacter('{{ $character->id }}');" data-id="{{ $character->id }}" data-type="{{ getRootClass($character) }}">

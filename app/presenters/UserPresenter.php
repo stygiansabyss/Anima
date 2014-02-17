@@ -7,6 +7,31 @@ class UserPresenter extends Syntax\Core\UserPresenter {
 		$characters = $this->resource->characters;
 
 		$characters = $characters->filter(function ($character) use ($gameId) {
+			if (!$character->checkStatus(array('APPROVED', 'ACTIVE'), true)) return false;
+			if ($character->games->where('game_id', $gameId)->count() > 0) return true;
+		});
+
+		return $characters;
+	}
+
+	public function getGameEnemies($gameId)
+	{
+		$characters = $this->resource->enemies;
+
+		$characters = $characters->filter(function ($character) use ($gameId) {
+			if (!$character->checkStatus(array('APPROVED', 'ACTIVE'), true)) return false;
+			if ($character->games->where('game_id', $gameId)->count() > 0) return true;
+		});
+
+		return $characters;
+	}
+
+	public function getGameCreatures($gameId)
+	{
+		$characters = $this->resource->creatures;
+
+		$characters = $characters->filter(function ($character) use ($gameId) {
+			if (!$character->checkStatus(array('APPROVED', 'ACTIVE'), true)) return false;
 			if ($character->games->where('game_id', $gameId)->count() > 0) return true;
 		});
 
