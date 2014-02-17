@@ -24,6 +24,12 @@
 						<td class="text-right">
 							<div class="btn-group">
 								{{ HTML::link('/game/master/status/'. $character->id .'/'. getRootClass($character) .'/APPROVED/1', 'Approve', array('class' => 'btn btn-xs btn-primary')) }}
+								{{ HTML::linkIcon(
+									'/game/master/character-status/'. $character->id .'/'. getRootClass($character) .'/'. $game->id,
+									'fa fa-bars',
+									null,
+									array('class' => 'btn btn-xs btn-primary', 'title' => 'Set statuses')
+								) }}
 							</div>
 						</td>
 					</tr>

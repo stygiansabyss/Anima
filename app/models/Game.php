@@ -227,10 +227,11 @@ class Game extends BaseModel {
 	public function getUnApprovedCharactersAttribute()
 	{
 		// Get all characters
-		$characters = $this->characters;
+		$characters = $this->characters->morph;
 
 		if (count($characters) > 0) {
 			$unapprovedCharacters = $characters->filter(function ($character) {
+				if ($character->checkStatus(array('DEAD', 'INACTIVE'))) return false;
 				if (!$character->checkStatus('APPROVED')) return true;
 			});
 

@@ -19,7 +19,7 @@ class Helper_Character extends Helper_Forum {
 		'Jaden Fiowen',
 		'Raeah Talai',
 		'Vashnier Bjorson',
-		'Vigdis Úlfa'
+		'Vigdis Úlfa',
 	);
 	protected $npcs = array(
 		'Aaron Normandy',

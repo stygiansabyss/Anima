@@ -22,7 +22,8 @@
 							</ul>
 						</div>
 						<div class="col-md-3">
-							<h4 class="media-heading">Quests</h4>
+							<h4 class="media-heading">Status</h4>
+							{{ implode('<br />', $character->status->status->name->toArray()) }}
 						</div>
 						<div class="col-md-3">
 							<h4 class="media-heading">Actions</h4>
