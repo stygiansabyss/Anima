@@ -30,7 +30,7 @@
 							<div class="btn-group">
 								{{ HTML::link('/character/sheet/'. $character->id, 'View', array('class' => 'btn btn-xs btn-primary')) }}
 								{{ HTML::link('/character/spellbook/'. $character->id, 'Spellbook', array('class' => 'btn btn-xs btn-primary')) }}
-								{{ HTML::editButton('user/characters/edit/'. $character->id) }}
+								{{ HTML::editButton('/user/characters/edit/'. $character->id) }}
 							</div>
 						</div>
 					</div>

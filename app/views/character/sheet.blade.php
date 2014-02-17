@@ -6,9 +6,9 @@
 				@if ($character->user->id == $activeUser->id || $activeUser->checkPermission('GAME_MASTER'))
 					<div class="panel-btn">
 						<div class="panel-btn-divider"></div>
-						{{ HTML::linkIcon('character/update/'. $character->id, 'fa fa-edit') }}
+						{{ HTML::linkIcon('/user/characters/edit/'. $character->id, 'fa fa-edit') }}
 						<div class="panel-btn-divider"></div>
-						{{ HTML::linkIcon('character/spellbook/'. $character->id, 'fa fa-book') }}
+						{{ HTML::linkIcon('/character/spellbook/'. $character->id, 'fa fa-book') }}
 					</div>
 				@endif
 			</div>

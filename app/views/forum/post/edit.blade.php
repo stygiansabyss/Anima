@@ -10,7 +10,9 @@
 					@else
 						@section('postForms')
 							{{ bForm::select('forum_post_type_id', $types, array($post->forum_post_type_id), array(), 'Type') }}
-							{{ bForm::select('postAs', $activeUser->postAs, $post->morph_id != null ? $post->morph_type .'::'. $post->morph_id : 'User::'. $activeUser->id, array(), 'Post As')}}
+							@if ($post->user_id == $activeUser->id)
+								{{ bForm::select('postAs', $activeUser->postAs, $post->morph_id != null ? $post->morph_type .'::'. $post->morph_id : 'User::'. $activeUser->id, array(), 'Post As')}}
+							@endif
 						@show
 					@endif
 					{{ bForm::text('name', $post->name, array('placeholder' => 'Title'), 'Title') }}

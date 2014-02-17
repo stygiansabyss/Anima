@@ -131,7 +131,11 @@ class Forum_PostController extends Core_Forum_PostController {
 
         if ($input != null) {
             // See who we are posting as
-            list($morphType, $morphId) = explode('::', $input['postAs']);
+            if (Input::has('postAs')) {
+                list($morphType, $morphId) = explode('::', $input['postAs']);
+            } else {
+                $morphType = 'User';
+            }
 
             // Get the information
             switch ($type) {
@@ -146,8 +150,8 @@ class Forum_PostController extends Core_Forum_PostController {
                         $post->morph_id   = $morphId;
                         $post->morph_type = $morphType;
                     } else {
-                        $post->morph_id   = null;
-                        $post->morph_type = null;
+                        $post->morph_id   = $post->morph_id;
+                        $post->morph_type = $post->morph_type;
                     }
 
                     $this->checkErrorsSave($post);
@@ -167,11 +171,11 @@ class Forum_PostController extends Core_Forum_PostController {
                     $reply->content             = e($input['content']);
 
                     if ($morphType != 'User') {
-                        $post->morph_id   = $morphId;
-                        $post->morph_type = $morphType;
+                        $reply->morph_id   = $morphId;
+                        $reply->morph_type = $morphType;
                     } else {
-                        $post->morph_id   = null;
-                        $post->morph_type = null;
+                        $reply->morph_id   = $reply->morph_id;
+                        $reply->morph_type = $reply->morph_type;
                     }
 
                     $this->checkErrorsSave($reply);

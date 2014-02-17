@@ -236,8 +236,11 @@ class User_CharacterController extends BaseController {
 	protected function updateAppearance($characterId, $appearanceId, $value)
 	{
 		$appearance        = Character_Appearance::where('morph_id', $characterId)->where('morph_type', 'Character')->where('appearance_id', $appearanceId)->first();
-		$appearance->value = $value;
 
-		$this->save($appearance);
+		if ($appearance != null) {
+			$appearance->value = $value;
+
+			$this->save($appearance);
+		}
 	}
 }
